@@ -1,4 +1,6 @@
-# HistoriasComuza
-En esta web estare subiendo lo que hago, lo que ya he hecho y cosas sobre mi equipo.. (Aunque no tengo equipo... aun)
+# Comuza
+¡Hola! Aqui conoceras profundamente a mi como desarrollador y a mi equipo, ¡Gracias por visitar!
+
+
 
 
