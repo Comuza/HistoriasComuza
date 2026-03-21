@@ -1,19 +1,133 @@
- <!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlackComuza...</title>
+    <title>Blackick</title>
+    
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #450104; color: #363c61; text-align: center; padding: 50px; }
-        h1 { color: #385939; font-size: 3rem; }
-        .card { background: #0d1117; border: 1px solid #6758bf; padding: 20px; border-radius: 0px; display: inline-block; }
+        body {
+            background-color: rgb(56, 1, 10);
+            color: rgb(79, 87, 34);
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .card, .carf, .cars {
+            background-color: rgb(25, 23, 55);
+            border: 1px solid rgb(79, 87, 34);
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card { border-radius: 24px; padding: 20px; max-width: 400px; }
+        
+        .carf { 
+            border-radius: 16px; 
+            min-height: 129px; 
+            max-width: 800px; 
+            margin: 60px auto; 
+        }
+
+        .cars { 
+            border-radius: 50px; 
+            max-width: 800px; 
+            margin: 60px auto; 
+            padding-bottom: 20px;
+        }
+
+        .apa {
+            background-color: rgb(77, 77, 77);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .caida {
+            display: none;
+            position: fixed;
+            right: 0 !important;
+            top: 50 px !important;
+            left: auto !important;   
+            margin: 0 !important;
+            transform: none !important;
+            background-color: rgb(128, 128, 128);
+            min-width: 160px;
+            border: 1px solid rgb(77, 77, 77);
+            z-index: 100;
+            text-align: left;
+        }
+
+        .caida a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .caida a:hover {
+            background-color: rgb(100, 100, 100);
+        }
+
+        .show {
+            display: block;
+        }
+
+        .boton {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 0;
+            z-index: 101;
+            margin-left: auto;
+            margin-right: 0;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>¡Bienvenido a  <strong>BlackSmocking!</strong> </h1>
-       <h2>El gran rincon donde nadie toca pasto, y se chambea de más...</h2>
+
+    <div class="boton">
+        <button onclick="menu()" class="apa"><span style="color: rgba(15, 170, 33, 0.847);">Menu</span></button>
+        <div id="menu" class="caida">
+            <a href="#Iniciar_sesión"> Iniciar Sesión</a>
+            <a href="#Equipo"> Equipo</a>
+            <a href="#Unirse_grupo">Unirse al grupo</a>
+        </div> 
     </div>
+
+    <div class="card">
+        <h1>Bienvenido a mi rincón</h1>
+    </div>
+
+    <div class="carf">
+        <h1>Recientes</h1>
+        <p>Se agregaron nuevas características. 0 tutoriales, 0 artículos y más</p>
+    </div>
+
+    <div class="cars">
+        <h1>Curriculum</h1>
+        <hr>
+        <h2><span style="color: rgb(66, 148, 250);">Información de nuevos proyectos en mi GitHub</span></h2>
+        <a href="https://github.com/Comuza" target="_blank" style="text-decoration: none;">
+            <span style="color: rgb(123, 120, 159);">Tocame te lo EXIJO</span>
+        </a>
+        <hr>
+        <h3><span style="color: rgb(123, 86, 34);">Experiencia laboral, Curriculum y más...</span></h3> 
+        <a href="https://www.linkedin.com/in/comuza-developer-b93bb73b8/" target="_blank" style="text-decoration: none;">
+            <span style="color: rgb(123, 120, 159);">Linkedin</span>
+        </a>
+    </div>
+
+    <script>
+        function menu() {
+            document.getElementById("menu").classList.toggle("show");
+        }
+    </script>
+
 </body>
-</html> 
+</html>
