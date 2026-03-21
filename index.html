@@ -51,43 +51,39 @@
             100% { transform: translateX(0); }
         }
 
-        @keyframe texto {
+        @keyframes texto {
             0% {
-            opacity: 0;
+                opacity: 0;
             }
-
             25% {
-            opacity: 0.25;
-            transform: rotate(45deg);
+                opacity: 0.25;
+                transform: rotate(45deg);
             }
-
             50% {
-          
-            transform: rotate(90deg);
-            opacity: 0.50;
-            font-size: 30 px;
+                transform: rotate(90deg);
+                opacity: 0.50;
+                font-size: 30px;
             }
-            
             75% {
-            opacity: 0.75;
-            transform: rotate(135deg)
-            font-size: 25 px;
+                opacity: 0.75;
+                transform: rotate(135deg);
+                font-size: 25px;
             }
-
             100% {
-            opacity: 0.75;
-            transform: rotate(0deg)
-            font-size: 20 px;
+                opacity: 0.75;
+                transform: rotate(0deg);
+                font-size: 20px;
             }
+        }
 
-    .texto {
-		display: inline-block;
-		font-weight: normal;
-		animation-name: texto;
-		animation-duration: 4s;
-		animation-iteration-count: infinite;
-		animation-timing-function: ease-in-out;
-    }
+        .texto {
+            display: inline-block;
+            font-weight: normal;
+            animation-name: texto;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
         
         .card, .carf, .cars {
             background-color: rgb(25, 23, 55);
