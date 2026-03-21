@@ -13,21 +13,66 @@
             text-align: center;
             padding: 50px;
         }
-
+        
+        @keyframes tarjetaAnimada {
+            0% {
+                opacity: 0;
+                transform: translateY(80px) scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes botonPulso {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(15, 170, 33, 0.7);
+            }
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 0 12px rgba(15, 170, 33, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(15, 170, 33, 0);
+            }
+        }
+        
+        @keyframes tituloVibra {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+            100% { transform: translateX(0); }
+        }
+        
         .card, .carf, .cars {
             background-color: rgb(25, 23, 55);
             border: 1px solid rgb(79, 87, 34);
             margin: 20px auto;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: tarjetaAnimada 0.7s ease-out forwards;
+            opacity: 0;
         }
 
-        .card { border-radius: 24px; padding: 20px; max-width: 400px; }
+        .card { 
+            border-radius: 24px; 
+            padding: 20px; 
+            max-width: 400px;
+            animation-delay: 0.1s;
+        }
         
         .carf { 
             border-radius: 16px; 
             min-height: 129px; 
             max-width: 800px; 
-            margin: 60px auto; 
+            margin: 60px auto;
+            animation-delay: 0.3s;
         }
 
         .cars { 
@@ -35,6 +80,11 @@
             max-width: 800px; 
             margin: 60px auto; 
             padding-bottom: 20px;
+            animation-delay: 0.5s;
+        }
+        
+        h1 {
+            animation: tituloVibra 0.5s ease 2;
         }
 
         .apa {
@@ -44,6 +94,14 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            transition: all 0.3s ease;
+            animation: botonPulso 2s infinite;
+        }
+        
+        .apa:hover {
+            background-color: rgb(15, 170, 33);
+            transform: scale(1.1);
+            animation: none;
         }
 
         .caida {
@@ -53,12 +111,20 @@
             top: 50px;
             left: auto;   
             margin: 0;
-            transform: none;
             background-color: rgb(0, 0, 0);
             min-width: 160px;
             border: 1px solid rgb(255, 255, 255);
             z-index: 100;
             text-align: left;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            transform: translateX(100px) rotate(-5deg);
+        }
+
+        .caida.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(0) rotate(0deg);
         }
 
         .caida a {
@@ -66,10 +132,12 @@
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            transition: all 0.3s ease;
         }
 
         .caida a:hover {
             background-color: rgb(29, 15, 15);
+            padding-left: 24px;
         }
 
         .show {
@@ -86,6 +154,7 @@
             margin-right: 0;
             margin-bottom: 20px;
             width: fit-content;
+            transition: all 1.3s ease;
         }
     </style>
 </head>
