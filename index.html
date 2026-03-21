@@ -50,6 +50,44 @@
             75% { transform: translateX(4px); }
             100% { transform: translateX(0); }
         }
+
+        @keyframe texto {
+            0% {
+            opacity: 0;
+            }
+
+            25% {
+            opacity: 0.25;
+            transform: rotate(45deg);
+            }
+
+            50% {
+          
+            transform: rotate(90deg);
+            opacity: 0.50;
+            font-size: 30 px;
+            }
+            
+            75% {
+            opacity: 0.75;
+            transform: rotate(135deg)
+            font-size: 25 px;
+            }
+
+            100% {
+            opacity: 0.75;
+            transform: rotate(0deg)
+            font-size: 20 px;
+            }
+
+    .texto {
+		display: inline-block;
+		font-weight: normal;
+		animation-name: texto;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+    }
         
         .card, .carf, .cars {
             background-color: rgb(25, 23, 55);
@@ -176,7 +214,7 @@
 
     <div class="carf">
         <h1>Recientes</h1>
-        <p>Se agregaron nuevas características. ¡0 manuales, 0 miembros y más!</p>
+        <p class="texto">Se agregaron nuevas características. ¡0 manuales, 0 miembros y más!</p>
     </div>
 
     <div class="cars">
