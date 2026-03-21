@@ -50,31 +50,28 @@
             75% { transform: translateX(4px); }
             100% { transform: translateX(0); }
         }
+@keyframes texto {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.50;
+        font-size: 30px;
+    }
+    75% {
+        opacity: 0.75;
+        font-size: 25px;
+    }
+    100% {
+        opacity: 0.75;
+        font-size: 20px;
+    }
+}
 
-        @keyframes texto {
-            0% {
-                opacity: 0;
-            }
-            25% {
-                opacity: 0.25;
-                transform: rotate(45deg);
-            }
-            50% {
-                transform: rotate(90deg);
-                opacity: 0.50;
-                font-size: 30px;
-            }
-            75% {
-                opacity: 0.75;
-                transform: rotate(135deg);
-                font-size: 25px;
-            }
-            100% {
-                opacity: 0.75;
-                transform: rotate(0deg);
-                font-size: 20px;
-            }
-        }
+
 
         .texto {
     display: inline-block;
