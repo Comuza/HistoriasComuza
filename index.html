@@ -6,6 +6,9 @@
     <title>¡Kerolmi!</title>
     
     <style>
+
+/* Fondo */
+
         body {
             background-color: rgb(56, 1, 10);
             color: rgb(79, 87, 34);
@@ -13,6 +16,8 @@
             text-align: center;
             padding: 50px;
         }
+
+/* Animaciones */
         
         @keyframes tarjetaAnimada {
             0% {
@@ -43,13 +48,7 @@
                 box-shadow: 0 0 0 0 rgba(15, 170, 33, 0);
             }
         }
-        
-        @keyframes tituloVibra {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
-            100% { transform: translateX(0); }
-        }
+    
 
         @keyframes texto {
             0% {
@@ -79,45 +78,75 @@
             }
         }
 
-      @keyframes rebote {
-    0% {
-        transform: scale(0) rotate(-180deg);
-        opacity: 0;
-        filter: blur(10px);
-    }
-    20% {
-        transform: scale(0.6) rotate(-45deg);
-        opacity: 0.5;
-        filter: blur(5px);
-    }
-    40% {
-        transform: scale(1.1) rotate(0deg);
-        opacity: 0.9;
-        filter: blur(0px);
-    }
-    55% {
-        transform: scale(0.97) rotate(0deg);
-        opacity: 1;
-    }
-    70% {
-        transform: scale(1.03) rotate(0deg);
-        opacity: 1;
-    }
-    85% {
-        transform: scale(0.99) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-        filter: blur(0px);
-    }
-}
+                @keyframes texto2 {
+            0% {
+                opacity: 0;
+                transform: translateY(-7px) scale(0.9);
+                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
+            }
+            25% {
+                opacity: 0.5;
+                transform: translateY(3px) scale(1.02);
+                text-shadow: 0 0 2px rgba(79, 87, 34, 0.5);
+            }
+
+            75% {
+                opacity: .9;
+                transform: translateY(1px) scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+                @keyframes rebote {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            20% {
+                transform: scale(0.6); 
+                opacity: 0.5;
+                filter: blur(5px);
+            }
+            40% {
+                transform: scale(1.1) rotate(0deg);
+                opacity: 0.9;
+                filter: blur(0px);
+            }
+            55% {
+                transform: scale(0.97) rotate(0deg);
+                opacity: 1;
+            }
+            70% {
+                transform: scale(1.03) rotate(0deg);
+                opacity: 1;
+            }
+            85% {
+                transform: scale(0.99) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+
+/* Clases */
 
         .texto {
             display: inline-block;
             font-weight: normal;
             animation: texto 1.2s ease-out 0.2s forwards;
+            transform-origin: center;
+        }
+
+        .texto2 {
+            display: inline-block;
+            font-weight: normal;
+            animation: texto2 1s ease-out 0.2s forwards;
             transform-origin: center;
         }
         
@@ -153,14 +182,11 @@
             animation-delay: 0.5s;
         }
         
-        h1 {
-            animation: tituloVibra 0.5s ease 2;
-        }
-
         .apa {
-            background-color: rgb(77, 77, 77);
-            color: white;
+            background-color: rgb(27, 22, 22);
+            color: rgb(37, 45, 38);
             padding: 10px 15px;
+            margin: 10px;
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s ease;
@@ -169,8 +195,8 @@
         
         .apa:hover {
             background-color: rgba(15, 170, 33, 0.19);
-            transform: scale(1.1);
-            animation: none;
+            transform: scale(1);
+            animation: botonPulso 3s infinite;
         }
 
         .caida {
@@ -182,6 +208,7 @@
             min-width: 160px;
             border: 1px solid rgb(255, 255, 255);
             z-index: 100;
+            margin: 10px;
             text-align: left;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             opacity: 0;
@@ -204,7 +231,7 @@
         }
 
         .caida a:hover {
-            background-color: rgb(29, 15, 15);
+            background-color: rgb(17, 2, 2);
             padding-left: 24px;
         }
 
@@ -217,18 +244,21 @@
             transition: all 1.3s ease;
         }
     </style>
+
 </head>
 <body>
+
+<!-- Botón de menú -->
 
 <div class="boton">
     <button onclick="menu()" class="apa"><span style="color: rgba(15, 170, 33, 0.847);">Menu</span></button>
     <div id="menu" class="caida">
-        <a href="Iniciar_sesion.html" target="_blank" class="texto"><span style="color: rgb(13, 218, 245);">Iniciar Sesión</span></a>
-        <a href="#Equipo" class="texto"><span style="color: rgb(32, 2, 140);">Equipo</span></a>
-        <a href="#Unirse_grupo" class="texto"><span style="color: rgb(19, 11, 110);">¡Unete al equipo!</span></a>
-        <a href="Manul.html" target="_blank" class="texto"><span style="color: rgba(246, 30, 6, 0.71);">Manual</span></a>
+        <a href="#Equipo" class="texto2"><span style="color: rgb(32, 2, 140);">Equipo</span></a>
+        <a href="Manul.html" target="_blank" class="texto2"><span style="color: rgba(246, 30, 6, 0.71);">Manual</span></a>
     </div> 
 </div>
+
+<!-- Texto -->
 
 <div class="card">
     <h1 class="texto"><b>Bienvenido a mi rincón</b></h1>
@@ -238,7 +268,6 @@
     <h1 class="texto"><b>Recientes</b></h1>
     <br>
     <p class="texto">Se agregaron nuevas características. ¡0 manuales, 0 miembros y más!</p>
-    <p></p>
 </div>
 
 <div class="cars">
@@ -256,14 +285,17 @@
     <br>
     <a class="texto" href="https://www.linkedin.com/in/comuza-developer-b93bb73b8/" target="_blank" style="text-decoration: none;">
         <span style="color: rgb(123, 120, 159);">Linkedin</span>
-    <h1></h1>
     </a>
 </div>
 
 <script>
+
+// Función para mostrar/ocultar el menú desplegable
+
     function menu() {
         document.getElementById("menu").classList.toggle("show");
     }
+
 </script>
 
 </body>
