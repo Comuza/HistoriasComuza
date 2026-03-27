@@ -1,7 +1,7 @@
 # Kerolmi: El Rincón de Comuza
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=35&pause=1000&color=4F5722&center=true&vCenter=true&width=600&lines=KEROLMI+PROJECT;EL+RINC%C3%93N+DE+COMUZA;EST%C3%89TICA+UNDERGROUND" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=35&pause=1000&color=4F5722&center=true&vCenter=true&width=600&lines=KEROLMI+PROJECTO;EL+RINC%C3%93N+DE+COMUZA;EST%C3%89TICA+UNDERGROUND" alt="Typing SVG" />
 </p>
 
 ## Resumen Ejecutivo
