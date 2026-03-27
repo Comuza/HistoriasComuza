@@ -86,4 +86,4 @@ Este proyecto se encuentra bajo licencia MIT.
 
 ---
 
-**Estado actual:** Proyecto completado. Sirve como base histórica para el desarrollo de la IA **Kecomu**.
+**Estado actual:** Proyecto completado. Sirve como base histórica para el desarrollo de la IA **Kecomu**, pero pronto este proyecto recibira un rework.
