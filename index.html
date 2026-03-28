@@ -3,302 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Kerolmi!</title>
+    <title>Kerolmi · El Rincón del Rey</title>
     
     <style>
-
-/* Fondo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background-color: rgb(56, 1, 10);
-            color: rgb(79, 87, 34);
-            font-family: sans-serif;
-            text-align: center;
-            padding: 50px;
+            background: linear-gradient(135deg, rgb(75, 15, 25), rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
         }
 
-/* Animaciones */
-        
-        @keyframes tarjetaAnimada {
-            0% {
-                opacity: 0;
-                transform: translateY(80px) scale(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-15px) scale(1.02);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        /* Fondo animado sutil */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(180, 50, 50, 0.2), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
         }
-        
-        @keyframes botonPulso {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(89, 3, 228, 0.256);
-            }
-            50% {
-                transform: scale(.99);
-                box-shadow: 0 0 0 12px rgba(15, 170, 33, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(15, 170, 33, 0);
-            }
-        }
-    
 
-        @keyframes texto {
+        /* Animación cinematográfica principal - larga y elegante */
+        @keyframes cinematicSlow {
             0% {
                 opacity: 0;
-                transform: translateY(10px) scale(0.95);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
+                transform: translateY(70px) scale(0.92);
+                filter: blur(18px);
             }
             25% {
-                opacity: 0.5;
-                transform: translateY(-3px) scale(1.02);
-                text-shadow: 0 0 2px rgba(79, 87, 34, 0.5);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translateY(0) scale(1.01);
-                text-shadow: 0 0 5px rgba(79, 87, 34, 0.8);
-            }
-            75% {
-                opacity: 1;
-                transform: translateY(-2px) scale(1);
-                text-shadow: 0 0 3px rgba(79, 87, 34, 0.6);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
-            }
-        }
-
-                @keyframes texto2 {
-            0% {
-                opacity: 0;
-                transform: translateY(-7px) scale(0.9);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
-            }
-            25% {
-                opacity: 0.5;
-                transform: translateY(3px) scale(1.02);
-                text-shadow: 0 0 2px rgba(79, 87, 34, 0.5);
-            }
-
-            75% {
-                opacity: .9;
-                transform: translateY(1px) scale(1);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-                @keyframes rebote {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-                filter: blur(10px);
-            }
-            20% {
-                transform: scale(0.6); 
-                opacity: 0.5;
-                filter: blur(5px);
-            }
-            40% {
-                transform: scale(1.1) rotate(0deg);
-                opacity: 0.9;
-                filter: blur(0px);
+                opacity: 0.3;
+                transform: translateY(-12px) translateX(8px) scale(1.01);
+                filter: blur(8px);
             }
             55% {
-                transform: scale(0.97) rotate(0deg);
-                opacity: 1;
+                opacity: 0.6;
+                transform: translateY(4px) translateX(-2px) scale(1);
+                filter: blur(2px);
             }
-            70% {
-                transform: scale(1.03) rotate(0deg);
-                opacity: 1;
-            }
-            85% {
-                transform: scale(0.99) rotate(0deg);
-                opacity: 1;
+            80% {
+                opacity: 0.85;
+                transform: translateY(-1px) scale(1);
+                filter: blur(0.5px);
             }
             100% {
-                transform: scale(1) rotate(0deg);
                 opacity: 1;
-                filter: blur(0px);
+                transform: translateY(0) translateX(0) scale(1);
+                filter: blur(0);
             }
         }
 
-/* Clases */
-
-        .texto {
-            display: inline-block;
-            font-weight: normal;
-            animation: texto 1.2s ease-out 0.2s forwards;
-            transform-origin: center;
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5), 0 0 4px rgba(180, 120, 30, 0.4);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
         }
 
-        .texto2 {
-            display: inline-block;
-            font-weight: normal;
-            animation: texto2 1s ease-out 0.2s forwards;
-            transform-origin: center;
+        /* Tarjetas modulares estilo Kecomu */
+        .tarjeta1,
+        .tarjeta2,
+        .tarjeta3,
+        .tarjeta4 {
+            animation: cinematicSlow 1.9s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            animation-fill-mode: both;
+            border-radius: 16px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
         }
-        
-        .card, .carf, .cars {
-            background-color: rgb(25, 23, 55);
-            border: 1px solid rgb(79, 87, 34);
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            animation: tarjetaAnimada 0.7s ease-out forwards;
+
+        .tarjeta1:hover,
+        .tarjeta2:hover,
+        .tarjeta3:hover,
+        .tarjeta4:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
+            background: rgba(55, 35, 40, 0.65);
+        }
+
+        .tarjeta1 {
+            padding: 32px;
+            margin-bottom: 28px;
+            animation-delay: 0s;
+        }
+
+        .fila {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-pequena {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px 16px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 14px;
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 2.7s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
             opacity: 0;
         }
 
-        .card { 
-            border-radius: 24px; 
-            padding: 20px; 
-            max-width: 400px;
-            animation-delay: 0.1s;
-        }
-        
-        .carf { 
-            border-radius: 16px; 
-            min-height: 129px; 
-            max-width: 800px; 
-            margin: 60px auto;
-            animation-delay: 0.3s;
+        .tarjeta-pequena:hover {
+            transform: translateY(-4px);
+            background: rgba(65, 40, 45, 0.7);
+            border-color: rgba(220, 170, 100, 0.8);
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
         }
 
-        .cars { 
-            border-radius: 50px; 
-            max-width: 800px; 
-            margin: 60px auto; 
-            padding-bottom: 20px;
-            animation-delay: 0.5s;
-        }
-        
-        .apa {
-            background-color: rgb(27, 22, 22);
-            color: rgb(37, 45, 38);
-            padding: 10px 15px;
-            margin: 10px;
+        .tarjeta-grande {
+            flex: 1;
+            min-width: 250px;
+            padding: 26px 22px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
             cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            animation: botonPulso 2s infinite;
-        }
-        
-        .apa:hover {
-            background-color: rgba(15, 170, 33, 0.19);
-            transform: scale(1);
-            animation: botonPulso 3s infinite;
+            animation: cinematicSlow 2.7s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            opacity: 0;
         }
 
-        .caida {
+        .tarjeta-grande:hover {
+            transform: translateY(-4px);
+            border-color: rgba(220, 170, 100, 0.8);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Delays secuenciales */
+        .f2-1 { animation-delay: 0.15s; }
+        .f2-2 { animation-delay: 0.45s; }
+        .f2-3 { animation-delay: 0.75s; }
+        .f3-1 { animation-delay: 1.1s; }
+        .f3-2 { animation-delay: 1.25s; }
+        .f3-3 { animation-delay: 1.5s; }
+
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.4s;
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            color: rgba(255, 240, 200, 1);
+            transform: scale(0.98);
+            letter-spacing: 0.3px;
+        }
+
+        .contenedor-boton {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 28px;
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        h1, h2, h3, p, span, a, li {
+            animation: cinematicSlow 1.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        h1 { animation-delay: 0.05s; }
+        h2 { animation-delay: 0.1s; }
+        h3 { animation-delay: 0.15s; }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            letter-spacing: -0.2px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 8px;
+        }
+
+        li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: rgba(200, 150, 80, 0.8);
+            font-size: 11px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: rgba(230, 190, 120, 1);
+            text-shadow: 0 0 6px rgba(200, 150, 80, 0.5);
+        }
+
+        /* Menú desplegable estilo moderno */
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(90, 55, 65, 0.9);
+            border-color: rgba(230, 180, 110, 0.9);
+            transform: scale(0.97);
+        }
+
+        .dropdown {
             display: none;
             position: fixed;
-            right: 0;
-            top: 50px;
-            background-color: rgb(0, 0, 0);
-            min-width: 160px;
-            border: 1px solid rgb(255, 255, 255);
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
             z-index: 100;
-            margin: 10px;
-            text-align: left;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            opacity: 0;
-            transform: translateX(100px) rotate(-5deg);
+            overflow: hidden;
+            animation: cinematicSlow 0.5s ease-out forwards;
         }
 
-        .caida.show {
+        .dropdown.show {
             display: block;
-            opacity: 1;
-            transform: translateX(0) rotate(0deg);
-            animation: rebote 0.5s ease-out forwards;
         }
 
-        .caida a {
-            color: white;
-            padding: 12px 16px;
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
             text-decoration: none;
             display: block;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
         }
 
-        .caida a:hover {
-            background-color: rgb(17, 2, 2);
-            padding-left: 24px;
+        .dropdown a:last-child {
+            border-bottom: none;
         }
 
-        .boton {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 101;
-            width: fit-content;
-            transition: all 1.3s ease;
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
+            color: rgba(255, 235, 180, 1);
+        }
+
+        @media (max-width: 768px) {
+            .fila {
+                flex-direction: column;
+                gap: 18px;
+            }
+            body {
+                padding: 16px;
+            }
+            .tarjeta1 {
+                padding: 24px;
+            }
+            .card-title {
+                font-size: 1.3rem;
+            }
+            .menu-boton {
+                top: 12px;
+                right: 12px;
+            }
         }
     </style>
-
 </head>
 <body>
 
-<!-- Botón de menú -->
+    <!-- Botón de menú moderno -->
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menu ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="Manul.html">Manual</a>
+            <a href="Equipo.html">Equipo</a>
+            <a href="Creditos.html">Créditos</a>
+        </div>
+    </div>
 
-<div class="boton">
-    <button onclick="menu()" class="apa"><span style="color: rgba(15, 170, 33, 0.847);">Menu</span></button>
-    <div id="menu" class="caida">
-        <a href="Manul.html" class="texto2"><span style="color: rgba(246, 30, 6, 0.71);">Manual</span></a>
-        <a href="Equipo.html" class="texto2"><span style="color: rgb(32, 2, 140);">Equipo</span></a>
-        <a href="Creditos.html" class="texto2"><span style="color: rgb(123, 120, 159);">Créditos</span></a>
-        
+    <!-- Contenido principal con estructura modular -->
+    <div class="tarjeta1 f2-1">
+        <h1 style="font-size: 2rem;">Bienvenido a mi rincón</h1>
+        <hr>
+        <p style="font-size: 12px; letter-spacing: 0.3px;">código artesanal · privacidad por diseño · detalles que importan</p>
     </div> 
-</div>
 
-<!-- Texto -->
+    <div class="fila">
+        <div class="tarjeta-grande f3-3">
+            <div class="card-title">recientes</div>
+            <hr>
+            <p>se agregaron nuevas características. 0 manuales, 0 miembros y más.</p>
+            <hr>
+            <ul>
+                <li>sistema líquido modular</li>
+                <li>animaciones cinematográficas</li>
+                <li>estructura moderna</li>
+            </ul>
+        </div>
 
-<div class="card">
-    <h1 class="texto"><b>Bienvenido a mi rincón</b></h1>
-</div>
+        <div class="tarjeta-grande f3-2">
+            <div class="card-title">curriculum</div>
+            <hr>
+            <p style="color: rgb(200, 170, 110);">información de nuevos proyectos en mi github</p>
+            <div style="margin: 18px 0;">
+                <a href="https://github.com/Comuza" target="_blank" style="font-weight: 500;">⟡ tocame te lo exijo ⟡</a>
+            </div>
+            <hr>
+            <p style="color: rgb(180, 140, 90);">experiencia laboral, curriculum y más...</p>
+            <div style="margin-top: 16px;">
+                <a href="https://www.linkedin.com/in/comuza-developer-b93bb73b8/" target="_blank">⟡ linkedin ⟡</a>
+            </div>
+        </div>
 
-<div class="carf">
-    <h1 class="texto"><b>Recientes</b></h1>
-    <br>
-    <p class="texto">Se agregaron nuevas características. ¡0 manuales, 0 miembros y más!</p>
-</div>
+        <div class="tarjeta-grande f3-3">
+            <div class="card-title">filosofía</div>
+            <hr>
+            <p>código artesanal · privacidad por diseño · optimización líquida</p>
+            <hr>
+            <p style="font-style: italic; text-align: center; margin-top: 12px;">"el detalle no es el detalle. el detalle es el diseño."</p>
+        </div>
+    </div>
 
-<div class="cars">
-    <h1 class="texto"><b>Curriculum</b></h1>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 20px 0;">
-    <h2 class="texto"><span style="color: rgb(66, 148, 250);">Información de nuevos proyectos en mi GitHub</span></h2>
-    <br>
-    <a class="texto" href="https://github.com/Comuza" target="_blank" style="text-decoration: none;">
-        <span style="color: rgb(123, 120, 159);">Tocame te lo EXIJO</span>
-    </a>
-    
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 30px 0;">
-
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Experiencia laboral, Curriculum y más...</span></h2> 
-    <br>
-    <a class="texto" href="https://www.linkedin.com/in/comuza-developer-b93bb73b8/" target="_blank" style="text-decoration: none;">
-        <span style="color: rgb(123, 120, 159);">Linkedin</span>
-    </a>
-</div>
-
-<script>
-
-// Función para mostrar/ocultar el menú desplegable
-
-    function menu() {
-        document.getElementById("menu").classList.toggle("show");
-    }
-
-</script>
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href='Proximamente.hmtl'">
+            ← Conoce más de mis compañeros
+        </button>
+        <button class="btn-config" onclick="location.href='https://comuza.github.io/ComuzaIA-Kerolmi/'">
+            ¡Explora Kecomu!
+        </button>
+    </div>
 
 </body>
 </html>
