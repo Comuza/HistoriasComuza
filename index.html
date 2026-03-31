@@ -38,24 +38,13 @@
         @keyframes cinematicSlow {
             0% {
                 opacity: 0;
-                transform: translateY(70px) scale(0.92);
-                filter: blur(18px);
+                transform: translateY(20px) scale(0.92);
             }
             25% {
                 opacity: 0.3;
-                transform: translateY(-12px) translateX(8px) scale(1.01);
-                filter: blur(8px);
+                transform: translateX(8px) scale(1.01);
             }
-            55% {
-                opacity: 0.6;
-                transform: translateY(4px) translateX(-2px) scale(1);
-                filter: blur(2px);
-            }
-            80% {
-                opacity: 0.85;
-                transform: translateY(-1px) scale(1);
-                filter: blur(0.5px);
-            }
+
             100% {
                 opacity: 1;
                 transform: translateY(0) translateX(0) scale(1);
@@ -130,7 +119,7 @@
             border-radius: 14px;
             border: 1px solid rgba(200, 150, 80, 0.4);
             transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
-            animation: cinematicSlow 2.7s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            animation: cinematicSlow 1.7s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
             opacity: 0;
         }
 
