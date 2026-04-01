@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerolmi · Manual HTML - Parte 3</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgb(75, 15, 25), rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(180, 50, 50, 0.2), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes cinematicSlow {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+        }
+
+        .tarjeta-principal {
+            animation: cinematicSlow 1.9s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            border-radius: 16px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+
+        .tarjeta-principal:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
+            background: rgba(55, 35, 40, 0.65);
+        }
+
+        .fila {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-contenido {
+            flex: 1;
+            min-width: 280px;
+            padding: 26px 22px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .tarjeta-contenido:hover {
+            transform: translateY(-4px);
+            border-color: rgba(220, 170, 100, 0.8);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+        }
+
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.15s; }
+        .delay-3 { animation-delay: 0.35s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            color: rgba(255, 240, 200, 1);
+            transform: scale(0.98);
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            letter-spacing: -0.2px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 8px;
+        }
+
+        li {
+            margin: 12px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: rgba(200, 150, 80, 0.8);
+            font-size: 12px;
+        }
+
+        .codigo-bloque {
+            background: rgba(20, 15, 18, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            color: rgba(200, 220, 150, 0.9);
+        }
+
+        .codigo-bloque pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .nota {
+            background: rgba(200, 150, 80, 0.15);
+            border-left: 3px solid #c89a4c;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .nota-warning {
+            background: rgba(200, 100, 50, 0.2);
+            border-left-color: #c97e3a;
+        }
+
+        .nota-success {
+            background: rgba(100, 180, 80, 0.15);
+            border-left-color: #7cb83c;
+        }
+
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(90, 55, 65, 0.9);
+            border-color: rgba(230, 180, 110, 0.9);
+            transform: scale(0.97);
+        }
+
+        .dropdown {
+            display: none;
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
+            color: rgba(255, 235, 180, 1);
+        }
+
+        .tabla-etiquetas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .tabla-etiquetas th,
+        .tabla-etiquetas td {
+            border: 1px solid rgba(200, 150, 80, 0.3);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tabla-etiquetas th {
+            background: rgba(200, 150, 80, 0.2);
+            font-weight: 600;
+        }
+
+        .tabla-etiquetas td {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .ejemplo-color {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .fila {
+                flex-direction: column;
+                gap: 18px;
+            }
+            body {
+                padding: 16px;
+            }
+            .tarjeta-principal {
+                padding: 24px;
+            }
+            .card-title {
+                font-size: 1.5rem;
+            }
+            .menu-boton {
+                top: 12px;
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="index.html">Inicio</a>
+            <a href="HTML.html">HTML - Parte 1</a>
+            <a href="HTML2.html">HTML - Parte 2</a>
+            <a href="HTML3.html">HTML - Parte 3</a>
+            <a href="CSS.html">CSS</a>
+            <a href="JavaScript.html">JavaScript</a>
+        </div>
+    </div>
+
+    <div class="tarjeta-principal delay-1">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 50px; height: 50px;" 
+                 alt="HTML5">
+            <h1 style="font-size: 2.2rem;">Manual de HTML - Parte 3</h1>
+        </div>
+        <hr>
+        <p style="font-size: 14px; letter-spacing: 0.3px;">Colores, SVG, Multimedia avanzada, Iframes y todo lo que necesitas para cerrar los fundamentos básicos de HTML</p>
+    </div>
+
+    <!-- Colores en HTML -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Colores">
+                1. Colores en HTML
+            </div>
+            <hr>
+            <p>En HTML (y CSS) puedes poner colores de varias formas. Los colores se usan en atributos como <code>color</code>, <code>bgcolor</code>, <code>background</code>, etc. Hay 4 formas principales de escribir un color:</p>
+            
+            <div style="margin: 15px 0;">
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">🎨 1. Nombres de colores</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Los más fáciles de recordar. HTML reconoce 140 nombres de colores.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                        <span style="background: red; padding: 4px 8px; border-radius: 4px;">red</span>
+                        <span style="background: blue; padding: 4px 8px; border-radius: 4px;">blue</span>
+                        <span style="background: green; padding: 4px 8px; border-radius: 4px;">green</span>
+                        <span style="background: yellow; color: black; padding: 4px 8px; border-radius: 4px;">yellow</span>
+                        <span style="background: orange; padding: 4px 8px; border-radius: 4px;">orange</span>
+                        <span style="background: purple; padding: 4px 8px; border-radius: 4px;">purple</span>
+                        <span style="background: pink; color: black; padding: 4px 8px; border-radius: 4px;">pink</span>
+                        <span style="background: cyan; color: black; padding: 4px 8px; border-radius: 4px;">cyan</span>
+                    </div>
+                    <div class="codigo-bloque" style="margin-top: 10px;">
+                        <pre>&lt;font color="red"&gt;Texto rojo&lt;/font&gt;
+&lt;body bgcolor="lightblue"&gt;...&lt;/body&gt;</pre>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">🎨 2. RGB (Red, Green, Blue)</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Define la cantidad de rojo, verde y azul. Cada valor va de 0 a 255.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                        <div><span class="ejemplo-color" style="background: rgb(255,0,0);"></span> rgb(255,0,0) = rojo</div>
+                        <div><span class="ejemplo-color" style="background: rgb(0,255,0);"></span> rgb(0,255,0) = verde</div>
+                        <div><span class="ejemplo-color" style="background: rgb(0,0,255);"></span> rgb(0,0,255) = azul</div>
+                        <div><span class="ejemplo-color" style="background: rgb(255,255,0);"></span> rgb(255,255,0) = amarillo</div>
+                        <div><span class="ejemplo-color" style="background: rgb(255,0,255);"></span> rgb(255,0,255) = magenta</div>
+                        <div><span class="ejemplo-color" style="background: rgb(0,255,255);"></span> rgb(0,255,255) = cian</div>
+                    </div>
+                    <div class="codigo-bloque" style="margin-top: 10px;">
+                        <pre>&lt;font color="rgb(255,100,50)"&gt;Texto naranja&lt;/font&gt;</pre>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">🎨 3. HEX (Hexadecimal)</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Es la forma más común. Empieza con # y luego 6 dígitos (0-9 y A-F).</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                        <div><span class="ejemplo-color" style="background: #FF0000;"></span> #FF0000 = rojo</div>
+                        <div><span class="ejemplo-color" style="background: #00FF00;"></span> #00FF00 = verde</div>
+                        <div><span class="ejemplo-color" style="background: #0000FF;"></span> #0000FF = azul</div>
+                        <div><span class="ejemplo-color" style="background: #FFFF00;"></span> #FFFF00 = amarillo</div>
+                        <div><span class="ejemplo-color" style="background: #FF00FF;"></span> #FF00FF = magenta</div>
+                        <div><span class="ejemplo-color" style="background: #00FFFF;"></span> #00FFFF = cian</div>
+                        <div><span class="ejemplo-color" style="background: #000000;"></span> #000000 = negro</div>
+                        <div><span class="ejemplo-color" style="background: #FFFFFF;"></span> #FFFFFF = blanco</div>
+                        <div><span class="ejemplo-color" style="background: #c89a4c;"></span> #c89a4c = dorado</div>
+                    </div>
+                    <div class="codigo-bloque" style="margin-top: 10px;">
+                        <pre>&lt;font color="#c89a4c"&gt;Texto dorado&lt;/font&gt;</pre>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <strong style="color: #e6c38a;">🎨 4. HSL (Hue, Saturation, Lightness)</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Define el color por matiz (0-360), saturación (0-100%) y luminosidad (0-100%).</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                        <div><span class="ejemplo-color" style="background: hsl(0,100%,50%);"></span> hsl(0,100%,50%) = rojo</div>
+                        <div><span class="ejemplo-color" style="background: hsl(120,100%,50%);"></span> hsl(120,100%,50%) = verde</div>
+                        <div><span class="ejemplo-color" style="background: hsl(240,100%,50%);"></span> hsl(240,100%,50%) = azul</div>
+                        <div><span class="ejemplo-color" style="background: hsl(60,100%,50%);"></span> hsl(60,100%,50%) = amarillo</div>
+                    </div>
+                    <div class="codigo-bloque" style="margin-top: 10px;">
+                        <pre>&lt;font color="hsl(30,100%,50%)"&gt;Texto naranja&lt;/font&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nota">
+                <strong>💡 Consejo:</strong> Para páginas web modernas, lo más usado es <strong>HEX</strong> (#RRGGBB) y <strong>RGB/RGBA</strong>. RGBA es como RGB pero con un canal alpha para transparencia: <code>rgba(255,100,50,0.5)</code>.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="SVG">
+                2. SVG: Gráficos Vectoriales
+            </div>
+            <hr>
+            <p><strong>SVG (Scalable Vector Graphics)</strong> es una forma de dibujar gráficos directamente en HTML. A diferencia de las imágenes normales (jpg, png), los SVG <strong>no pierden calidad</strong> al agrandarse. Son perfectos para logos, iconos e ilustraciones.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Círculo --&gt;
+&lt;svg width="100" height="100"&gt;
+  &lt;circle cx="50" cy="50" r="40" 
+          fill="#e6c38a" stroke="#c89a4c" stroke-width="3"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Rectángulo con bordes redondeados --&gt;
+&lt;svg width="150" height="80"&gt;
+  &lt;rect x="10" y="10" width="130" height="60" 
+        fill="#c97e3a" rx="15"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Línea --&gt;
+&lt;svg width="200" height="50"&gt;
+  &lt;line x1="10" y1="25" x2="190" y2="25" 
+        stroke="#fff" stroke-width="3"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Estrella con polygon --&gt;
+&lt;svg width="100" height="100"&gt;
+  &lt;polygon points="50,10 61,35 90,35 68,52 79,80 50,63 21,80 32,52 10,35 39,35" 
+           fill="#e6c38a" /&gt;
+&lt;/svg&gt;</pre>
+            </div>
+            
+            <p><strong>Formas básicas de SVG:</strong></p>
+            <ul>
+                <li><strong>&lt;circle&gt;</strong> - Círculo: cx, cy (centro), r (radio)</li>
+                <li><strong>&lt;rect&gt;</strong> - Rectángulo: x, y, width, height, rx (bordes redondeados)</li>
+                <li><strong>&lt;line&gt;</strong> - Línea: x1,y1 (inicio) x2,y2 (fin)</li>
+                <li><strong>&lt;polygon&gt;</strong> - Polígono: points (coordenadas separadas por espacios)</li>
+                <li><strong>&lt;path&gt;</strong> - Forma personalizada (más avanzado)</li>
+                <li><strong>&lt;text&gt;</strong> - Texto dentro del SVG</li>
+            </ul>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Texto dentro de SVG --&gt;
+&lt;svg width="200" height="50"&gt;
+  &lt;text x="20" y="35" fill="#e6c38a" font-size="20"&gt;Hola SVG!&lt;/text&gt;
+&lt;/svg&gt;</pre>
+            </div>
+            
+            <div class="nota">
+                <strong>🖼️ ¿Para qué sirve SVG?</strong><br>
+                Logos que se ven bien en cualquier tamaño, iconos que puedes cambiar de color con CSS, gráficos simples, animaciones básicas, mapas interactivos.
+            </div>
+        </div>
+    </div>
+
+    <!-- Iframes y Multimedia Avanzada -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Iframes">
+                3. Iframes: Páginas dentro de páginas
+            </div>
+            <hr>
+            <p>Un <strong>&lt;iframe&gt;</strong> es una "ventana" que muestra otra página web dentro de la tuya. Es súper útil para incrustar videos de YouTube, mapas de Google, widgets de redes sociales, etc.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Iframe básico --&gt;
+&lt;iframe src="https://ejemplo.com" width="100%" height="300"&gt;&lt;/iframe&gt;
+
+&lt;!-- Video de YouTube --&gt;
+&lt;iframe width="560" height="315" 
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  frameborder="0" 
+  allowfullscreen&gt;
+&lt;/iframe&gt;
+
+&lt;!-- Mapa de Google Maps --&gt;
+&lt;iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.123456!2d-0.123456!3d40.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDA3JzI0LjQiTiAwwrAwNyc1Ny40Ilc!5e0!3m2!1ses!2ses!4v1234567890" 
+  width="600" height="450" 
+  style="border:0;" 
+  allowfullscreen="" 
+  loading="lazy"&gt;
+&lt;/iframe&gt;</pre>
+            </div>
+            
+            <p><strong>Atributos importantes del iframe:</strong></p>
+            <ul>
+                <li><strong>src</strong> - La URL de lo que quieres mostrar.</li>
+                <li><strong>width / height</strong> - Tamaño en píxeles o porcentaje.</li>
+                <li><strong>frameborder</strong> - Si muestra borde (0 = sin borde).</li>
+                <li><strong>allowfullscreen</strong> - Permite pantalla completa.</li>
+                <li><strong>loading="lazy"</strong> - Carga solo cuando el usuario se acerca (mejora rendimiento).</li>
+                <li><strong>sandbox</strong> - Restricciones de seguridad para el contenido incrustado.</li>
+            </ul>
+            
+            <div class="nota nota-warning">
+                <strong>⚠️ Dónde conseguir código de iframe:</strong><br>
+                YouTube: Compartir → Insertar → Copias el código.<br>
+                Google Maps: Compartir → Insertar un mapa → Copias el código.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Multimedia">
+                4. Audio y Video (Repaso)
+            </div>
+            <hr>
+            <p>Repaso de multimedia nativa con más detalles sobre atributos útiles:</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Audio con controles --&gt;
+&lt;audio controls&gt;
+  &lt;source src="cancion.mp3" type="audio/mpeg"&gt;
+  &lt;source src="cancion.ogg" type="audio/ogg"&gt;
+  Tu navegador no soporta audio.
+&lt;/audio&gt;
+
+&lt;!-- Video con poster (imagen de vista previa) --&gt;
+&lt;video width="640" height="360" controls poster="vista-previa.jpg"&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  &lt;source src="video.webm" type="video/webm"&gt;
+  Tu navegador no soporta video.
+&lt;/video&gt;
+
+&lt;!-- Video en bucle y silenciado (útil para fondos) --&gt;
+&lt;video autoplay loop muted&gt;
+  &lt;source src="fondo.mp4" type="video/mp4"&gt;
+&lt;/video&gt;</pre>
+            </div>
+            
+            <p><strong>Atributos de audio y video:</strong></p>
+            <ul>
+                <li><strong>controls</strong> - Muestra botones de reproducción.</li>
+                <li><strong>autoplay</strong> - Empieza automáticamente (en muchos navegadores requiere muted).</li>
+                <li><strong>loop</strong> - Se repite en bucle.</li>
+                <li><strong>muted</strong> - Empieza silenciado.</li>
+                <li><strong>poster</strong> - (Solo video) Imagen que se ve antes de reproducir.</li>
+                <li><strong>preload</strong> - Carga el video antes de reproducir (auto, metadata, none).</li>
+            </ul>
+            
+            <div class="nota nota-success">
+                <strong>✅ Formatos recomendados:</strong><br>
+                Audio: MP3 (universal), OGG (alternativo)<br>
+                Video: MP4 (H.264) es el más compatible, WebM es alternativa libre.
+            </div>
+        </div>
+    </div>
+
+    <!-- Metadatos Avanzados y Favicon -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Metadatos">
+                5. Metadatos Avanzados (SEO)
+            </div>
+            <hr>
+            <p>Los metadatos van dentro del <code>&lt;head&gt;</code> y le dan información a los navegadores y a Google sobre tu página.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;head&gt;
+  &lt;!-- Metadatos básicos --&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  
+  &lt;!-- SEO: Descripción que aparece en Google --&gt;
+  &lt;meta name="description" content="Aprende HTML desde cero con ejemplos prácticos y manual completo"&gt;
+  
+  &lt;!-- SEO: Palabras clave (menos importante hoy en día) --&gt;
+  &lt;meta name="keywords" content="HTML, tutorial, web, aprender, manual"&gt;
+  
+  &lt;!-- Autor de la página --&gt;
+  &lt;meta name="author" content="Kerolmi"&gt;
+  
+  &lt;!-- Control de robots de Google --&gt;
+  &lt;meta name="robots" content="index, follow"&gt;
+  
+  &lt;!-- Redes sociales (Open Graph) --&gt;
+  &lt;meta property="og:title" content="Manual de HTML - Kerolmi"&gt;
+  &lt;meta property="og:description" content="Aprende HTML fácil y rápido"&gt;
+  &lt;meta property="og:image" content="https://tusitio.com/imagen.jpg"&gt;
+  &lt;meta property="og:url" content="https://tusitio.com/html.html"&gt;
+  &lt;meta property="og:type" content="website"&gt;
+  
+  &lt;!-- Twitter Cards --&gt;
+  &lt;meta name="twitter:card" content="summary_large_image"&gt;
+  &lt;meta name="twitter:title" content="Manual de HTML - Kerolmi"&gt;
+  &lt;meta name="twitter:description" content="Aprende HTML fácil y rápido"&gt;
+  &lt;meta name="twitter:image" content="https://tusitio.com/imagen.jpg"&gt;
+  
+  &lt;title&gt;Kerolmi · Manual de HTML&lt;/title&gt;
+&lt;/head&gt;</pre>
+            </div>
+            
+            <div class="nota">
+                <strong>📈 ¿Por qué son importantes?</strong><br>
+                <strong>Meta description</strong> - Es el texto que aparece debajo del título en Google. ¡Influye en que la gente haga clic!<br>
+                <strong>Open Graph</strong> - Controla cómo se ve tu página cuando la compartes en Facebook, WhatsApp, Twitter.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Favicon">
+                6. Favicon y Link
+            </div>
+            <hr>
+            <p>El <strong>favicon</strong> es ese pequeño ícono que aparece en la pestaña del navegador. También puedes usar la etiqueta <code>&lt;link&gt;</code> para enlazar otros recursos.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Favicon básico (icono en la pestaña) --&gt;
+&lt;link rel="icon" type="image/x-icon" href="favicon.ico"&gt;
+&lt;!-- O para PNG --&gt;
+&lt;link rel="icon" type="image/png" href="favicon.png"&gt;
+
+&lt;!-- Tamaños diferentes para dispositivos --&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"&gt;
+
+&lt;!-- Enlazar CSS externo --&gt;
+&lt;link rel="stylesheet" href="estilos.css"&gt;
+
+&lt;!-- Enlazar fuentes de Google Fonts --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"&gt;</pre>
+            </div>
+            
+            <p><strong>Usos de &lt;link&gt;:</strong></p>
+            <ul>
+                <li><strong>rel="icon"</strong> - Favicon de la página.</li>
+                <li><strong>rel="stylesheet"</strong> - Archivo CSS externo.</li>
+                <li><strong>rel="preconnect"</strong> - Mejora rendimiento para recursos externos.</li>
+                <li><strong>rel="canonical"</strong> - URL principal (evita contenido duplicado).</li>
+                <li><strong>rel="alternate"</strong> - Versiones alternativas (idiomas, RSS).</li>
+            </ul>
+            
+            <div class="nota nota-success">
+                <strong>✅ Tip:</strong> Los favicon se ven en la pestaña, en marcadores, y en la pantalla de inicio de móviles. Dale identidad visual a tu página con un buen icono.
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio Final Integrador -->
+    <div class="tarjeta-contenido delay-4">
+        <div class="card-title">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
+                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                 alt="Ejercicio">
+            🚀 Proyecto Final: Tu Primera Página Completa
+        </div>
+        <hr>
+        <p>¡Felicidades! Has llegado al final de los fundamentos básicos de HTML. Ahora es momento de crear una página que integre TODO lo que aprendiste en las 3 partes:</p>
+        
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin: 15px 0;">
+            <strong style="color: #e6c38a;">📋 Requisitos del proyecto:</strong>
+            <ul style="margin-top: 10px;">
+                <li><strong>Estructura semántica</strong> - &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt;</li>
+                <li><strong>Enlaces internos</strong> - Menú que navegue dentro de la misma página usando #id</li>
+                <li><strong>Enlaces externos</strong> - Que abran en nueva pestaña (target="_blank")</li>
+                <li><strong>Listas</strong> - Al menos una lista ordenada y una desordenada</li>
+                <li><strong>Tabla</strong> - Con información de horarios, precios, o tus cosas favoritas</li>
+                <li><strong>Formulario</strong> - Con diferentes tipos de input (text, email, date, color, range)</li>
+                <li><strong>Imágenes</strong> - Con atributo alt obligatorio</li>
+                <li><strong>SVG o Canvas</strong> - Dibuja algo (un logo, un círculo, una estrella)</li>
+                <li><strong>Iframe</strong> - Incrusta un video de YouTube o un mapa de Google Maps</li>
+                <li><strong>Colores</strong> - Usa HEX, RGB y nombres de colores en diferentes elementos</li>
+                <li><strong>Favicon</strong> - Ponle un icono a tu página</li>
+                <li><strong>Meta descripción</strong> - Para que Google muestre un buen resumen</li>
+                <li><strong>Responsive</strong> - Usa la meta etiqueta viewport</li>
+            </ul>
+        </div>
+        
+        <div class="nota nota-warning">
+            <strong>🎯 Reto extra:</strong><br>
+            Crea un <strong>menú desplegable</strong> usando solo HTML (sin JavaScript). Pista: puedes usar &lt;select&gt; y &lt;option&gt; o &lt;details&gt; y &lt;summary&gt;.
+        </div>
+        
+        <div class="nota">
+            <strong>🔗 Recursos útiles para seguir aprendiendo:</strong><br>
+            • <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" style="color: #e6c38a;">MDN Web Docs - HTML</a> - La documentación oficial.<br>
+            • <a href="https://www.w3schools.com/html/" target="_blank" style="color: #e6c38a;">W3Schools - HTML Tutorial</a> - Ejemplos interactivos.<br>
+            • <a href="https://htmlcolorcodes.com/" target="_blank" style="color: #e6c38a;">HTML Color Codes</a> - Para elegir colores fácilmente.<br>
+            • <a href="https://validator.w3.org/" target="_blank" style="color: #e6c38a;">Validador de HTML</a> - Revisa que tu código esté bien escrito.
+        </div>
+        
+        <div class="nota nota-success" style="text-align: center;">
+            <strong>🌟 ¡Ya dominas los fundamentos básicos de HTML! 🌟</strong><br>
+            Ahora estás listo para aprender CSS y darle estilo a tus páginas. El camino continúa. ¡Sigue así! 🚀
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href='index.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="Inicio">
+            Volver al inicio
+        </button>
+        <button class="btn-config" onclick="location.href='HTML2.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="HTML">
+            ← Parte 2: Atributos y Multimedia
+        </button>
+        <button class="btn-config" onclick="location.href='CSS.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="CSS">
+            Siguiente: CSS →
+        </button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-btn')) {
+                var dropdown = document.getElementById("menuDropdown");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
