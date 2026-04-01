@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerolmi · Manual HTML - Parte 2</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgb(75, 15, 25), rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(180, 50, 50, 0.2), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes cinematicSlow {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+        }
+
+        .tarjeta-principal {
+            animation: cinematicSlow 1.9s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            border-radius: 16px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+
+        .tarjeta-principal:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
+            background: rgba(55, 35, 40, 0.65);
+        }
+
+        .fila {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-contenido {
+            flex: 1;
+            min-width: 280px;
+            padding: 26px 22px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .tarjeta-contenido:hover {
+            transform: translateY(-4px);
+            border-color: rgba(220, 170, 100, 0.8);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+        }
+
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.15s; }
+        .delay-3 { animation-delay: 0.35s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            color: rgba(255, 240, 200, 1);
+            transform: scale(0.98);
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            letter-spacing: -0.2px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 8px;
+        }
+
+        li {
+            margin: 12px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: rgba(200, 150, 80, 0.8);
+            font-size: 12px;
+        }
+
+        .codigo-bloque {
+            background: rgba(20, 15, 18, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            color: rgba(200, 220, 150, 0.9);
+        }
+
+        .codigo-bloque pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .nota {
+            background: rgba(200, 150, 80, 0.15);
+            border-left: 3px solid #c89a4c;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .nota-warning {
+            background: rgba(200, 100, 50, 0.2);
+            border-left-color: #c97e3a;
+        }
+
+        .nota-success {
+            background: rgba(100, 180, 80, 0.15);
+            border-left-color: #7cb83c;
+        }
+
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(90, 55, 65, 0.9);
+            border-color: rgba(230, 180, 110, 0.9);
+            transform: scale(0.97);
+        }
+
+        .dropdown {
+            display: none;
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
+            color: rgba(255, 235, 180, 1);
+        }
+
+        .tabla-etiquetas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .tabla-etiquetas th,
+        .tabla-etiquetas td {
+            border: 1px solid rgba(200, 150, 80, 0.3);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tabla-etiquetas th {
+            background: rgba(200, 150, 80, 0.2);
+            font-weight: 600;
+        }
+
+        .tabla-etiquetas td {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .fila {
+                flex-direction: column;
+                gap: 18px;
+            }
+            body {
+                padding: 16px;
+            }
+            .tarjeta-principal {
+                padding: 24px;
+            }
+            .card-title {
+                font-size: 1.5rem;
+            }
+            .menu-boton {
+                top: 12px;
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="index.html">Inicio</a>
+            <a href="HTML.html">HTML - Parte 1</a>
+            <a href="HTML2.html">HTML - Parte 2</a>
+            <a href="HTML3.html">HTML - Parte 3</a>
+            <a href="CSS.html">CSS</a>
+            <a href="JavaScript.html">JavaScript</a>
+        </div>
+    </div>
+
+    <div class="tarjeta-principal delay-1">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 50px; height: 50px;" 
+                 alt="HTML5">
+            <h1 style="font-size: 2.2rem;">Manual de HTML - Parte 2</h1>
+        </div>
+        <hr>
+        <p style="font-size: 14px; letter-spacing: 0.3px;">Atributos, multimedia, iframes, formularios avanzados y buenas prácticas · Lleva tu HTML al siguiente nivel</p>
+    </div>
+
+    <!-- Atributos Globales -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Atributos">
+                1. Atributos Globales
+            </div>
+            <hr>
+            <p>Los atributos son configuraciones extra que le pones a las etiquetas (id, clases etc.). Estos atributos funcionan en <strong>TODAS</strong> las etiquetas. Esto se les denominan "atributos globales". Esta es la base para darle comportamiento e identidad a tus elementos.</p>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="id">
+                    <div>
+                        <strong style="color: #e6c38a;">id</strong>
+                        <p style="margin: 0; font-size: 13px;">La id es un identificador ÚNICO para cada elemento.</p>
+                        <code style="font-size: 12px; color: #a8e6cf;">&lt;h1 id="titulo-principal"&gt;Bienvenidos&lt;/h1&gt;</code>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="class">
+                    <div>
+                        <strong style="color: #e6c38a;">class</strong>
+                        <p style="margin: 0; font-size: 13px;">Identificador REUTILIZABLE. Puedes poner la misma clase a muchos elementos. Sirve para darles el mismo estilo con CSS o el mismo comportamiento con JavaScript.</p>
+                        <code style="font-size: 12px; color: #a8e6cf;">&lt;p class="texto-destacado"&gt;Este texto se ve especial&lt;/p&gt;</code>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="title">
+                    <div>
+                        <strong style="color: #e6c38a;">title</strong>
+                        <p style="margin: 0; font-size: 13px;">Añade un tooltip (texto que aparece al pasar el mouse). Muy útil para dar información extra sin ocupar espacio.</p>
+                        <code style="font-size: 12px; color: #a8e6cf;">&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</code>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="data-*">
+                    <div>
+                        <strong style="color: #e6c38a;">data-*</strong>
+                        <p style="margin: 0; font-size: 13px;">Atributos personalizados. Puedes inventar tus propios atributos usando "data-" al inicio. Muy útil para guardar información que luego JavaScript puede leer.</p>
+                        <code style="font-size: 12px; color: #a8e6cf;">&lt;button data-id="123" data-color="rojo"&gt;Botón&lt;/button&gt;</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nota">
+                <strong>💡 Diferencia clave entre id y class:</strong> id es como tu número de identificación (único), class es como el uniforme del colegio (muchos lo pueden usar). Usa id para elementos únicos, class para grupos.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Enlaces">
+                2. Enlaces Internos y Anclas
+            </div>
+            <hr>
+            <p>Ya viste cómo hacer enlaces a otras páginas. Pero también puedes hacer enlaces que lleven a <strong>otra parte de la MISMA página</strong>. Esto se hace con anclas (id) y enlaces especiales.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Primero, creas un destino con id --&gt;
+&lt;h2 id="seccion-contacto"&gt;Contáctanos&lt;/h2&gt;
+
+&lt;!-- Luego, haces un enlace que lleve ahí --&gt;
+&lt;a href="#seccion-contacto"&gt;Ir a Contacto&lt;/a&gt;
+
+&lt;!-- También puedes enlazar a una sección de otra página --&gt;
+&lt;a href="pagina.html#seccion-contacto"&gt;Ir a Contacto en otra página&lt;/a&gt;</pre>
+            </div>
+            
+            <p><strong>Cómo funciona:</strong></p>
+            <ul>
+                <li>El <strong>#</strong> en el href indica que es un enlace interno.</li>
+                <li>Después del # pones el <strong>id</strong> del elemento al que quieres llegar.</li>
+                <li>Cuando alguien hace clic, el navegador se desplaza suavemente (o de golpe) hasta ese elemento.</li>
+                <li>Esto es súper útil para menús largos, FAQs, o páginas con mucho contenido.</li>
+            </ul>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Ejemplo práctico: menú de navegación interno --&gt;
+&lt;nav&gt;
+  &lt;a href="#inicio"&gt;Inicio&lt;/a&gt;
+  &lt;a href="#servicios"&gt;Servicios&lt;/a&gt;
+  &lt;a href="#contacto"&gt;Contacto&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="inicio"&gt;...&lt;/section&gt;
+&lt;section id="servicios"&gt;...&lt;/section&gt;
+&lt;section id="contacto"&gt;...&lt;/section&gt;</pre>
+            </div>
+            
+            <div class="nota nota-success">
+                <strong>✅ Tip pro:</strong> Si quieres un enlace que no haga nada (para pruebas), usa <code>href="javascript:void(0)"</code> o simplemente <code>href="#"</code>. El # solo recarga la página al inicio, así que ojo con eso.
+            </div>
+        </div>
+    </div>
+
+    <!-- Multimedia: Audio y Video -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Audio">
+                3. Audio y Video (Multimedia Nativa)
+            </div>
+            <hr>
+            <p>Antes de HTML5, para poner un video necesitabas Flash (un plugin externo). Ahora HTML tiene etiquetas propias para audio y video. Funcionan en todos los navegadores modernos.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Audio simple --&gt;
+&lt;audio controls&gt;
+  &lt;source src="cancion.mp3" type="audio/mpeg"&gt;
+  &lt;source src="cancion.ogg" type="audio/ogg"&gt;
+  Tu navegador no soporta audio.
+&lt;/audio&gt;
+
+&lt;!-- Video simple --&gt;
+&lt;video width="640" height="360" controls&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  &lt;source src="video.webm" type="video/webm"&gt;
+  Tu navegador no soporta video.
+&lt;/video&gt;</pre>
+            </div>
+            
+            <p><strong>Atributos importantes:</strong></p>
+            <ul>
+                <li><strong>controls</strong> - Muestra los botones de reproducción, pausa, volumen.</li>
+                <li><strong>autoplay</strong> - El video/audio empieza automáticamente (cuidado, muchos navegadores lo bloquean si no hay interacción).</li>
+                <li><strong>loop</strong> - Se repite en bucle.</li>
+                <li><strong>muted</strong> - Empieza silenciado (útil para autoplay).</li>
+                <li><strong>poster</strong> - (Solo video) Imagen que se muestra antes de reproducir.</li>
+            </ul>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Video con más opciones --&gt;
+&lt;video width="100%" controls autoplay muted loop poster="imagen-preview.jpg"&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  Tu navegador no soporta video.
+&lt;/video&gt;</pre>
+            </div>
+            
+            <div class="nota">
+                <strong>🎵 Formatos soportados:</strong><br>
+                Audio: MP3, WAV, OGG<br>
+                Video: MP4 (H.264), WebM, OGG<br>
+                <strong>Tip:</strong> Incluye varios formatos con &lt;source&gt; para compatibilidad máxima.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Iframe">
+                4. Iframes: Contenido de otras páginas
+            </div>
+            <hr>
+            <p>Un iframe es como una "ventana" dentro de tu página que muestra contenido de otra web. Sirve para incrustar videos de YouTube, mapas de Google, widgets de redes sociales, etc.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Incrustar un video de YouTube --&gt;
+&lt;iframe width="560" height="315" 
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen&gt;
+&lt;/iframe&gt;
+
+&lt;!-- Incrustar un mapa de Google Maps --&gt;
+&lt;iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d..." 
+  width="600" height="450" 
+  style="border:0;" 
+  allowfullscreen="" 
+  loading="lazy"&gt;
+&lt;/iframe&gt;</pre>
+            </div>
+            
+            <p><strong>Atributos importantes del iframe:</strong></p>
+            <ul>
+                <li><strong>src</strong> - La URL de lo que quieres mostrar (YouTube, Google Maps, etc.)</li>
+                <li><strong>width / height</strong> - Tamaño del iframe en píxeles o porcentaje.</li>
+                <li><strong>allowfullscreen</strong> - Permite que el contenido se ponga en pantalla completa.</li>
+                <li><strong>loading="lazy"</strong> - Carga el contenido solo cuando el usuario se acerca (mejora el rendimiento).</li>
+                <li><strong>sandbox</strong> - Aplica restricciones de seguridad al contenido incrustado.</li>
+            </ul>
+            
+            <div class="nota nota-warning">
+                <strong>⚠️ Seguridad:</strong> No todos los sitios permiten ser incrustados en iframes (tienen protección). YouTube, Vimeo, Google Maps sí permiten. Si quieres incrustar algo, busca la opción "Compartir" → "Insertar" para obtener el código correcto.
+            </div>
+        </div>
+    </div>
+
+    <!-- Formularios Avanzados y API -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Formularios">
+                5. Formularios Avanzados
+            </div>
+            <hr>
+            <p>HTML5 trajo nuevos tipos de input y atributos que facilitan mucho la creación de formularios. Validan datos automáticamente y mejoran la experiencia en móviles.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;form&gt;
+  &lt;!-- Input de email con validación automática --&gt;
+  &lt;input type="email" placeholder="tu@email.com" required&gt;
+  
+  &lt;!-- Input de número con mínimo y máximo --&gt;
+  &lt;input type="number" min="1" max="100" step="1"&gt;
+  
+  &lt;!-- Input de fecha (calendario nativo) --&gt;
+  &lt;input type="date"&gt;
+  
+  &lt;!-- Input de color (selector de color) --&gt;
+  &lt;input type="color"&gt;
+  
+  &lt;!-- Input de rango (slider) --&gt;
+  &lt;input type="range" min="0" max="100"&gt;
+  
+  &lt;!-- Input de teléfono (muestra teclado numérico en móvil) --&gt;
+  &lt;input type="tel"&gt;
+  
+  &lt;!-- Input de búsqueda (con botón para borrar) --&gt;
+  &lt;input type="search"&gt;
+  
+  &lt;!-- Input de URL (valida que sea una dirección web) --&gt;
+  &lt;input type="url"&gt;
+  
+  &lt;!-- Datalist (autocompletado personalizado) --&gt;
+  &lt;input list="ciudades"&gt;
+  &lt;datalist id="ciudades"&gt;
+    &lt;option&gt;Madrid&lt;/option&gt;
+    &lt;option&gt;Barcelona&lt;/option&gt;
+    &lt;option&gt;Valencia&lt;/option&gt;
+  &lt;/datalist&gt;
+&lt;/form&gt;</pre>
+            </div>
+            
+            <p><strong>Atributos nuevos de validación:</strong></p>
+            <ul>
+                <li><strong>required</strong> - Campo obligatorio.</li>
+                <li><strong>min / max</strong> - Valor mínimo y máximo (para number, date, range).</li>
+                <li><strong>pattern</strong> - Expresión regular para validar el formato (ej: patrón para código postal).</li>
+                <li><strong>placeholder</strong> - Texto de ejemplo dentro del input.</li>
+                <li><strong>autocomplete</strong> - Sugiere valores guardados por el navegador (on/off).</li>
+            </ul>
+            
+            <div class="nota">
+                <strong>📱 Diferencia en móviles:</strong> Al usar <code>type="tel"</code> aparece el teclado numérico. Con <code>type="email"</code> aparece el teclado con @ y .com. Con <code>type="date"</code> aparece un selector de fecha nativo. ¡Mejora muchísimo la experiencia del usuario!
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="API">
+                6. APIs de HTML5 (Geolocalización y Almacenamiento)
+            </div>
+            <hr>
+            <p>HTML5 no solo es etiquetas. También trajo APIs (interfaces de programación) que permiten hacer cosas increíbles con JavaScript. Aquí las dos más útiles:</p>
+            
+            <div style="margin: 15px 0;">
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" style="width: 24px;" alt="geolocation">
+                        <strong style="color: #e6c38a;">Geolocalización</strong>
+                    </div>
+                    <p style="font-size: 13px;">Obtiene la ubicación del usuario (con su permiso). Útil para tiendas cercanas, clima, mapas, etc.</p>
+                    <div class="codigo-bloque" style="margin: 8px 0;">
+                        <pre>navigator.geolocation.getCurrentPosition(function(posicion) {
+  console.log("Latitud: " + posicion.coords.latitude);
+  console.log("Longitud: " + posicion.coords.longitude);
+});</pre>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="storage">
+                        <strong style="color: #e6c38a;">LocalStorage y SessionStorage</strong>
+                    </div>
+                    <p style="font-size: 13px;">Guardan datos en el navegador del usuario. LocalStorage guarda para siempre (hasta que se borre manualmente), SessionStorage guarda hasta que se cierra la pestaña.</p>
+                    <div class="codigo-bloque" style="margin: 8px 0;">
+                        <pre>// Guardar datos
+localStorage.setItem("nombre", "Juan");
+localStorage.setItem("tema", "oscuro");
+
+// Leer datos
+let nombre = localStorage.getItem("nombre");
+
+// Borrar datos
+localStorage.removeItem("nombre");
+localStorage.clear(); // Borra todo</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nota nota-success">
+                <strong>✅ ¿Para qué sirve LocalStorage?</strong><br>
+                Guardar preferencias del usuario (tema claro/oscuro), recordar qué productos puso en el carrito aunque cierre la página, guardar la sesión sin necesidad de servidor, etc. Es como una mini base de datos en el navegador.
+            </div>
+        </div>
+    </div>
+
+    <!-- Buenas Prácticas y SEO -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="SEO">
+                7. SEO y Buenas Prácticas
+            </div>
+            <hr>
+            <p>Escribir HTML no es solo hacer que funcione. También hay que pensar en <strong>Google</strong> (para que te encuentren) y en las <strong>personas con discapacidad</strong> (accesibilidad).</p>
+            
+            <div style="margin: 15px 0;">
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">📌 Estructura correcta de títulos</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Solo UN &lt;h1&gt; por página. Luego &lt;h2&gt; para secciones, &lt;h3&gt; para subsecciones. No saltes niveles (no pongas un &lt;h4&gt; después de un &lt;h2&gt; sin un &lt;h3&gt; de por medio).</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">📌 Atributo alt en imágenes</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Siempre, siempre, siempre. Describe qué hay en la imagen. Si es decorativa, pon alt="" (vacío). Esto ayuda a personas con discapacidad visual y a Google.</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <strong style="color: #e6c38a;">📌 Etiquetas semánticas</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Usa &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt;. No uses &lt;div&gt; para todo. Google entiende mejor la estructura de tu página con etiquetas semánticas.</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <strong style="color: #e6c38a;">📌 Meta descripción</strong>
+                    <p style="font-size: 13px; margin-top: 5px;">Agrega esto en el &lt;head&gt;: <code>&lt;meta name="description" content="Descripción de tu página que aparece en Google"&gt;</code>. Es el texto que ven los usuarios en los resultados de búsqueda.</p>
+                </div>
+            </div>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta name="description" content="Aprende HTML desde cero con ejemplos prácticos"&gt;
+  &lt;meta name="keywords" content="HTML, tutorial, web, aprender"&gt;
+  &lt;meta name="author" content="Kerolmi"&gt;
+  &lt;title&gt;Mi página - Aprende HTML&lt;/title&gt;
+&lt;/head&gt;</pre>
+            </div>
+            
+            <div class="nota nota-success">
+                <strong>✅ Resumen de buenas prácticas:</strong><br>
+                1. Usa etiquetas semánticas.<br>
+                2. Solo un &lt;h1&gt; por página.<br>
+                3. Siempre &lt;alt&gt; en imágenes.<br>
+                4. Meta description para que Google muestre un buen resumen.<br>
+                5. Código indentado y ordenado (legible para humanos y máquinas).
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Ejercicio">
+                🎯 Ejercicio Final - Parte 2
+            </div>
+            <hr>
+            <p>Ahora que sabes atributos, multimedia, iframes y formularios avanzados, crea una página que incluya:</p>
+            <ul>
+                <li>Un <strong>menú</strong> con enlaces internos (anclas) que lleven a diferentes secciones de la misma página.</li>
+                <li>Un <strong>video</strong> incrustado de YouTube usando iframe.</li>
+                <li>Un <strong>audio</strong> con controles (puede ser un archivo de prueba).</li>
+                <li>Un <strong>formulario</strong> que use al menos 3 tipos nuevos (email, date, range, color, etc.) y tenga validación (required, min, max).</li>
+                <li>Un <strong>mapa de Google Maps</strong> incrustado con iframe.</li>
+                <li>Al menos un elemento con <strong>id</strong> y otro con <strong>class</strong>.</li>
+            </ul>
+            
+            <div class="nota nota-warning">
+                <strong>🎯 Reto extra:</strong><br>
+                Usa LocalStorage con JavaScript para guardar el nombre del usuario cuando lo escriba en un input, y mostrarlo en otra parte de la página cuando recargues.
+            </div>
+            
+            <div class="nota">
+                <strong>🔗 Recursos útiles para seguir:</strong><br>
+                • <a href="https://developer.mozilla.org/es/docs/Web/HTML/Elemento/iframe" target="_blank" style="color: #e6c38a;">MDN - Iframes</a><br>
+                • <a href="https://developer.mozilla.org/es/docs/Web/API/Geolocation_API" target="_blank" style="color: #e6c38a;">MDN - Geolocalización</a><br>
+                • <a href="https://developer.mozilla.org/es/docs/Web/API/Window/localStorage" target="_blank" style="color: #e6c38a;">MDN - LocalStorage</a>
+            </div>
+            
+            <div class="nota nota-success" style="text-align: center;">
+                <strong>¡Ya sabes más sobre HTML!</strong><br>
+                Dominas atributos globales, multimedia nativa, iframes, formularios avanzados y buenas prácticas de SEO. En la Parte 3 veremos cosas más avanzadas como Canvas, SVG, Drag & Drop, y cómo integrar HTML con CSS y JavaScript como un profesional.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href='index.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="Inicio">
+            Volver al inicio
+        </button>
+        <button class="btn-config" onclick="location.href='HTML.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="HTML">
+            ← Parte 1: Fundamentos
+        </button>
+        <button class="btn-config" onclick="location.href='HTML3.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="CSS">
+            Siguiente: HTML3 →
+        </button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-btn')) {
+                var dropdown = document.getElementById("menuDropdown");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
