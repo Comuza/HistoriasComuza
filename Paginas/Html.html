@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerolmi · Manual HTML</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgb(75, 15, 25), rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(180, 50, 50, 0.2), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes cinematicSlow {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+        }
+
+        .tarjeta-principal {
+            animation: cinematicSlow 1.9s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            border-radius: 16px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+
+        .tarjeta-principal:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
+            background: rgba(55, 35, 40, 0.65);
+        }
+
+        .fila {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-contenido {
+            flex: 1;
+            min-width: 280px;
+            padding: 26px 22px;
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .tarjeta-contenido:hover {
+            transform: translateY(-4px);
+            border-color: rgba(220, 170, 100, 0.8);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+        }
+
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.15s; }
+        .delay-3 { animation-delay: 0.35s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            color: rgba(255, 240, 200, 1);
+            transform: scale(0.98);
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            letter-spacing: -0.2px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 8px;
+        }
+
+        li {
+            margin: 12px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: rgba(200, 150, 80, 0.8);
+            font-size: 12px;
+        }
+
+        .codigo-bloque {
+            background: rgba(20, 15, 18, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            color: rgba(200, 220, 150, 0.9);
+        }
+
+        .codigo-bloque pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .nota {
+            background: rgba(200, 150, 80, 0.15);
+            border-left: 3px solid #c89a4c;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .nota-warning {
+            background: rgba(200, 100, 50, 0.2);
+            border-left-color: #c97e3a;
+        }
+
+        .nota-success {
+            background: rgba(100, 180, 80, 0.15);
+            border-left-color: #7cb83c;
+        }
+
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(90, 55, 65, 0.9);
+            border-color: rgba(230, 180, 110, 0.9);
+            transform: scale(0.97);
+        }
+
+        .dropdown {
+            display: none;
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
+            color: rgba(255, 235, 180, 1);
+        }
+
+        .tabla-etiquetas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .tabla-etiquetas th,
+        .tabla-etiquetas td {
+            border: 1px solid rgba(200, 150, 80, 0.3);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tabla-etiquetas th {
+            background: rgba(200, 150, 80, 0.2);
+            font-weight: 600;
+        }
+
+        .tabla-etiquetas td {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .fila {
+                flex-direction: column;
+                gap: 18px;
+            }
+            body {
+                padding: 16px;
+            }
+            .tarjeta-principal {
+                padding: 24px;
+            }
+            .card-title {
+                font-size: 1.5rem;
+            }
+            .menu-boton {
+                top: 12px;
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="index.html">Inicio</a>
+            <a href="Equipo.html">Equipo</a>
+            <a href="Creditos.html">Créditos</a>
+        </div>
+    </div>
+
+        <div class="fila">
+    <div class="tarjeta-contenido delay-2">
+        <div class="card-title">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                 alt="HTML5">
+            1. ¿Qué es HTML?
+        </div>
+        <hr>
+        
+        <p><strong>HTML</strong> (HyperText Markup Language) es el lenguaje estándar para crear páginas web. Este lenguaje no es considerado un lenguaje de programación, sino un <strong>lenguaje de etiquetas</strong>, aunque esto no le quita importancia al lenguaje.</p>
+        
+        <hr>
+        
+        <p>Este lenguaje no se maneja solo en la creación de páginas web, sino que va acompañado de otros 2 Lenguajes, CSS y JavaScript. <br> <br> Este es el orden de cada uno:</p>
+        
+        <div style="margin: 16px 0;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 32px; height: 32px;" alt="HTML">
+                <div>
+                    <strong style="color: #e6c38a;">HTML son los huesos</strong>
+                    <p style="margin: 0; font-size: 13px;">Con este le das estructura a la página, el esqueleto donde todo se sostiene.</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" style="width: 32px; height: 32px;" alt="CSS">
+                <div>
+                    <strong style="color: #e6c38a;">CSS es la piel</strong>
+                    <p style="margin: 0; font-size: 13px;">Para que se vea divina la página, con colores, formas y diseño moderno.</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" style="width: 32px; height: 32px;" alt="JavaScript">
+                <div>
+                    <strong style="color: #e6c38a;">JavaScript son los músculos</strong>
+                    <p style="margin: 0; font-size: 13px;">Le da la fuerza suficiente para crear un mundo casi ilimitado: botones, cambios de idioma, cambios de temas, manejar cookies, etc.</p>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <p>Esto es así porque, aunque HTML sea importante para la estructura de la web, sin los demás no sería posible crear sitios web modernos con botones, cambios de colores, idiomas y un diseño moderno con animaciones.</p>
+        
+    </div>
+</div>
+
+<div class="fila">
+    <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                 alt="HTML5">
+            2. El Estándar Vivo y la Evolución
+        </div>
+        <hr>
+        <p>HTML no siempre fue como lo conocemos. Para entender el modelo actual <strong>"HTML5"</strong>, hay que comprender que este lenguaje se creo en un mundo de caos donde cada navegador interpretaba el código a su manera.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #e6c38a;">
+                <strong style="color: #e6c38a; display: block; margin-bottom: 5px;">El Pasado (HTML 4 / XHTML)</strong>
+                <p style="font-size: 13px; margin: 0;">Este lenguaje era rígido, dependía de plugins externos como Flash para video y carecía de etiquetas estructurales modernas.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #e44d26;">
+                <strong style="color: #e44d26; display: block; margin-bottom: 5px;">El Presente (HTML5)</strong>
+                <p style="font-size: 13px; margin: 0;">Este lenguaje es el <strong>Estandar</strong> del mundo entero. Este introdujo multimedia nativa, geolocalización y la base de la web moderna: la <strong>Semántica</strong>.</p>
+            </div>
+        </div>
+
+        <p>HTML5 es el acuerdo global que permite que una web funcione igual en cualquier dispositivo, desde un smartphone hasta una Smart TV.</p>
+    </div>
+</div>
+
+<div class="fila">
+    <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
+                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                 alt="Boilerplate">
+            3. El "Boilerplate": La Estructura Base
+        </div>
+        <hr>
+        <p>Todo proyecto profesional nace de este esquema. Es el contrato legal entre tu código y el navegador:</p>
+
+        <div class="codigo-bloque">
+            <pre>&lt;!DOCTYPE html&gt;
+        &lt;html lang="es"&gt;
+        &lt;head&gt;
+        &lt;meta charset="UTF-8"&gt; &lt;
+        &lt;meta name="viewport" content="width=device-width"&gt;
+        &lt;title&gt;Mi Web Profesional&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;</pre>
+        </div>
+    </div>
+</div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">Estructura básica</div>
+            <p>Ahora debemos entender porque funciona eso:</p>
+            <hr>
+            <ul>
+                <li><strong>&lt;!DOCTYPE html&gt;</strong> - Declara que es HTML5, el modelo más moderno, y el estandar actual.</li>
+                <li><strong>&lt;html&gt;</strong> - Aqui inicia el documento html</li>
+                <li><strong>&lt;head&gt;</strong> - Aqui empieza el head, aqui se introduce todo lo que no es visible en la pagina, como el UFT-8, idioma de la pagina, etc.</li>
+                <li><strong>&lt;lang="es"&gt;</strong> - Atributo que indica el idioma de la página, este indica que el idioma de la pagina, para facilitar accesibilidad, traducciones y cambios de idioma, &lt;es&gt; es español y &lt;en&gt; es inglés.</li>
+                <li><strong>&lt;meta charset="UTF-8"&gt;</strong> - Define la codificación de caracteres, UTF-8 es el estándar que soporta casi todos los caracteres del mundo, incluyendo emojis, ñ, y una infinidad de caracteres más.</li>
+                <li><strong>&lt;meta name="viewport" content="width=device-width"&gt;</strong> - Hace que la página sea responsiva, adaptándose a diferentes tamaños de pantalla, como móviles, tablets y computadoras.</li>
+                <li><strong>&lt;title&gt;</strong> - El título que aparece en la pestaña del navegador, es importante para que los usuarios identifiquen tu página entre muchas pestañas abiertas.</li>
+                <li><strong>&lt;/head&gt;</strong> - Aqui termina el head, siempre para cerrar algo como head, debe empezar con /, sino se abre otra.</li>
+                <li><strong>&lt;body&gt;</strong> - En el body se encuentra el contenido visible de la página, animaciones, colores y palabras</li>
+                <li><strong>&lt;title&gt;</strong> - Título que aparece en la pestaña</li>
+                <li><strong>&lt;/body&gt;</strong> - Cierra el body</li>
+                <li><strong>&lt;/html&gt;</strong> - Cierra el documento html</li>
+            </ul>
+            <div class="nota">
+                <strong>Felicidades:</strong> Ya entendiste en que se basa cada pagina web profesional!<code>, adentro de cada bloque como head y body se hace lo verdaderamente potente</code>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Etiquetas de texto - Explicación detallada -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="HTML5">
+                Etiquetas de texto
+            </div>
+            <hr>
+            <p>Las etiquetas de texto son las más básicas pero esenciales. Con ellas escribes todo el contenido que el usuario va a leer:</p>
+            
+            <table class="tabla-etiquetas">
+                <tr>
+                    <th>Etiqueta</th>
+                    <th>Qué hace</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>&lt;h1&gt; a &lt;h6&gt;</td>
+                    <td>Cada h (Heading) es un tipo de titulo, subtitulo etc... h1 es el más grande, y cada vez más grande el numero, más chico se vuelve el titulo, h6 es el menos importante.</td>
+                    <td><span style="color: #e6c38a;">&lt;h1&gt;Mi título principal&lt;/h1&gt;</span></td>
+                </tr>
+                <tr>
+                    <td>&lt;p&gt;</td>
+                    <td>Párrafo de texto. El de siempre</td>
+                    <td><span style="color: #e6c38a;">&lt;p&gt;Este es un párrafo&lt;/p&gt;</span></td>
+                </tr>
+                <tr>
+                    <td>&lt;strong&gt;</td>
+                    <td>Texto en negrita. Esto cambia la tipografia de un texto a negrita.</td>
+                    <td><span style="color: #e6c38a;">&lt;strong&gt;Texto importante&lt;/strong&gt;</span></td>
+                </tr>
+                <tr>
+                    <td>&lt;em&gt;</td>
+                    <td>Texto en cursiva. Estp cambia la tipografia de un texto a cursiva.</td>
+                    <td><span style="color: #e6c38a;">&lt;em&gt;Texto con énfasis&lt;/em&gt;</span></td>
+                </tr>
+                <tr>
+                    <td>&lt;br&gt;</td>
+                    <td>Salto de línea. No necesita cierre, solo hace un enter.</td>
+                    <td><span style="color: #e6c38a;">Línea 1&lt;br&gt;Línea 2</span></td>
+                </tr>
+                <tr>
+                    <td>&lt;hr&gt;</td>
+                    <td>Línea horizontal. Separa secciones visualmente.</td>
+                    <td><span style="color: #e6c38a;">&lt;hr&gt;</span></td>
+                </tr>
+            </table>
+            
+            <div class="nota">
+                <strong>💡 Dato clave:</strong> Se pueden combinar etiquetas para crear efectos más complejos, por ejemplo &lt;h3&gt;hola&lt;em&gt;mundo&lt;/em&gt;&lt;/h3&gt; .
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Enlaces">
+                Enlaces e imágenes
+            </div>
+            <hr>
+            <p>Los enlaces son lo que hace que la web sea una "red". Conectan páginas entre sí. Las imágenes hacen todo más visual.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Enlace a otra página --&gt;
+&lt;a href="https://ejemplo.com"&gt;Texto que se ve&lt;/a&gt;
+
+&lt;!-- Enlace que abre en nueva pestaña --&gt;
+&lt;a href="pagina.html" target="_blank"&gt;Abrir en nueva pestaña&lt;/a&gt;
+
+&lt;!-- Imagen --&gt;
+&lt;img src="imagen.jpg" alt="Descripción de la imagen"&gt;</pre>
+            </div>
+            
+            <p><strong>Explicación línea por línea:</strong></p>
+            <ul>
+                <li><strong>&lt;a&gt;</strong> - La etiqueta de ancla (anchor). Todo lo que esté adentro se vuelve clickeable.</li>
+                <li><strong>href</strong> - El atributo que dice a dónde va el enlace. Puede ser otra web, otra página tuya, o incluso una sección dentro de la misma página.</li>
+                <li><strong>target="_blank"</strong> - Hace que el enlace se abra en una pestaña nueva. Si no pones esto, se abre en la misma pestaña.</li>
+                <li><strong>&lt;img&gt;</strong> - La etiqueta de imagen. No tiene cierre. Necesita dos cosas: src (de dónde viene la imagen) y alt (texto alternativo).</li>
+                <li><strong>alt</strong> - Es súper importante. Si la imagen no carga, se ve este texto. También lo usan los lectores de pantalla para personas con discapacidad visual.</li>
+            </ul>
+            
+            <div class="nota nota-warning">
+                <strong>⚠️ Importante:</strong> El atributo <code>alt</code> en imágenes NO es opcional. Es obligatorio para accesibilidad web. Describe qué hay en la imagen.
+            </div>
+        </div>
+    </div>
+
+    <!-- Listas y tablas - Explicación detallada -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Listas">
+                Listas
+            </div>
+            <hr>
+            <p>Las listas sirven para organizar información en viñetas o números. Hay dos tipos principales:</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;!-- Lista desordenada (con viñetas) --&gt;
+&lt;ul&gt;
+  &lt;li&gt;Manzanas&lt;/li&gt;
+  &lt;li&gt;Peras&lt;/li&gt;
+  &lt;li&gt;Plátanos&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Lista ordenada (numerada) --&gt;
+&lt;ol&gt;
+  &lt;li&gt;Primero, precalentar el horno&lt;/li&gt;
+  &lt;li&gt;Segundo, mezclar los ingredientes&lt;/li&gt;
+  &lt;li&gt;Tercero, hornear por 30 minutos&lt;/li&gt;
+&lt;/ol&gt;</pre>
+            </div>
+            
+            <p><strong>Cuándo usar cada una:</strong></p>
+            <ul>
+                <li><strong>&lt;ul&gt; (unordered list)</strong> - Usa viñetas. Perfecta para listas donde el orden no importa: características, compras, hobbies.</li>
+                <li><strong>&lt;ol&gt; (ordered list)</strong> - Usa números. Perfecta para pasos a seguir, rankings, instrucciones donde el orden SÍ importa.</li>
+                <li><strong>&lt;li&gt; (list item)</strong> - Cada elemento de la lista, ya sea dentro de ul o ol.</li>
+            </ul>
+            
+            <div class="nota">
+                <strong>💡 Tip:</strong> Puedes meter listas dentro de listas (listas anidadas) para crear subcategorías. Muy útil para menús desplegables.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Tablas">
+                Tablas
+            </div>
+            <hr>
+            <p>Las tablas organizan información en filas y columnas. Son perfectas para mostrar datos comparativos, horarios, precios, etc.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Nombre&lt;/th&gt;
+    &lt;th&gt;Edad&lt;/th&gt;
+    &lt;th&gt;Ciudad&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ana&lt;/td&gt;
+    &lt;td&gt;25&lt;/td&gt;
+    &lt;td&gt;Madrid&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Luis&lt;/td&gt;
+    &lt;td&gt;30&lt;/td&gt;
+    &lt;td&gt;Barcelona&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+            </div>
+            
+            <p><strong>Explicación de cada etiqueta:</strong></p>
+            <ul>
+                <li><strong>&lt;table&gt;</strong> - Crea la tabla. Todo lo que tenga que ver con la tabla va adentro.</li>
+                <li><strong>&lt;tr&gt;</strong> - Table Row. Cada &lt;tr&gt; es una fila nueva.</li>
+                <li><strong>&lt;th&gt;</strong> - Table Header. Es el encabezado de la columna. Aparece en negrita y centrado por defecto.</li>
+                <li><strong>&lt;td&gt;</strong> - Table Data. Cada celda con información dentro de una fila.</li>
+            </ul>
+            
+            <div class="nota nota-success">
+                <strong>✅ Dato:</strong> Por cada &lt;tr&gt; (fila), debes tener la misma cantidad de &lt;td&gt; (celdas) para que la tabla se vea ordenada. Si quieres que una celda ocupe varias filas o columnas, existen los atributos <code>rowspan</code> y <code>colspan</code>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Formularios y elementos semánticos -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Formularios">
+                Formularios
+            </div>
+            <hr>
+            <p>Los formularios son la forma en que tu página recibe información del usuario. Desde un simple campo de búsqueda hasta un registro completo.</p>
+            
+            <div class="codigo-bloque">
+                <pre>&lt;form action="/enviar" method="POST"&gt;
+  &lt;label for="nombre"&gt;Tu nombre:&lt;/label&gt;
+  &lt;input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre"&gt;
+  
+  &lt;label for="email"&gt;Correo:&lt;/label&gt;
+  &lt;input type="email" id="email" name="email" required&gt;
+  
+  &lt;label for="mensaje"&gt;Mensaje:&lt;/label&gt;
+  &lt;textarea id="mensaje" name="mensaje" rows="4"&gt;&lt;/textarea&gt;
+  
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</pre>
+            </div>
+            
+            <p><strong>Explicación de cada parte:</strong></p>
+            <ul>
+                <li><strong>&lt;form&gt;</strong> - El contenedor del formulario. <code>action</code> es a dónde se envía la info, <code>method</code> es cómo se envía (GET o POST).</li>
+                <li><strong>&lt;label&gt;</strong> - Texto que describe el campo. El atributo <code>for</code> se conecta con el <code>id</code> del input.</li>
+                <li><strong>&lt;input&gt;</strong> - El campo donde el usuario escribe. El atributo <code>type</code> define qué tipo de dato es: text, email, password, number, date, etc.</li>
+                <li><strong>&lt;textarea&gt;</strong> - Campo de texto grande, para mensajes largos o comentarios.</li>
+                <li><strong>&lt;button&gt;</strong> - Botón que envía el formulario. <code>type="submit"</code> es el que envía los datos.</li>
+                <li><strong>required</strong> - Atributo que hace que el campo sea obligatorio. Si el usuario no lo llena, el navegador no deja enviar.</li>
+                <li><strong>placeholder</strong> - Texto de ejemplo que aparece dentro del input antes de escribir.</li>
+            </ul>
+            
+            <div class="nota">
+                <strong>📌 Tipos de input más comunes:</strong> text, email, password, number, date, checkbox, radio, file, submit, tel, url, color.
+            </div>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                     alt="Semántica">
+                Elementos Semánticos
+            </div>
+            <hr>
+            <p>Antes de HTML5, todo se hacía con &lt;div&gt;. Ahora tenemos etiquetas que describen QUÉ es cada parte de la página. Esto ayuda a los navegadores, a Google y a la accesibilidad.</p>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="header">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;header&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Cabecera de la página o de una sección. Aquí suele ir el logo, el título principal y la navegación.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="nav">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;nav&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Menú de navegación. Contiene los enlaces principales de la página.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="main">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;main&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Contenido principal de la página. Debe ser único y no repetirse en otras páginas. Solo debe haber UN &lt;main&gt; por página.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="section">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;section&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Agrupa contenido relacionado temáticamente. Por ejemplo: sección de servicios, sección de testimonios.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="article">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;article&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Contenido independiente que podría funcionar por sí solo. Ideal para posts de blog, noticias, tarjetas de productos.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="aside">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;aside&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Contenido relacionado pero no principal. Ejemplo: barra lateral con anuncios, enlaces relacionados, biografía del autor.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width: 24px;" alt="footer">
+                    <div>
+                        <strong style="color: #e6c38a;">&lt;footer&gt;</strong>
+                        <p style="margin: 0; font-size: 13px;">Pie de página. Aquí va información de contacto, derechos de autor, enlaces a políticas, redes sociales.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nota nota-success">
+                <strong>✅ Por qué usar etiquetas semánticas:</strong><br>
+                1. <strong>SEO</strong> - Google entiende mejor tu contenido y lo posiciona más alto.<br>
+                2. <strong>Accesibilidad</strong> - Los lectores de pantalla pueden navegar más fácil.<br>
+                3. <strong>Mantenimiento</strong> - Tu código es más fácil de leer para otros desarrolladores y para ti en el futuro.
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio práctico final -->
+    <div class="tarjeta-contenido delay-4">
+        <div class="card-title">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
+                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
+                 alt="Ejercicio">
+            ¡Manos a la obra! Tu primer ejercicio
+        </div>
+        <hr>
+        <p>Ya tienes todas las herramientas básicas. Ahora es momento de construir. Crea una página web simple que contenga:</p>
+        <ul>
+            <li>Un <strong>&lt;header&gt;</strong> con tu nombre como título principal (&lt;h1&gt;)</li>
+            <li>Un <strong>&lt;nav&gt;</strong> con enlaces ficticios (Inicio, Sobre mí, Contacto)</li>
+            <li>Un <strong>&lt;main&gt;</strong> con:
+                <ul style="margin-top: 8px; margin-left: 20px;">
+                    <li>Un &lt;section&gt; con un párrafo presentándote</li>
+                    <li>Un &lt;section&gt; con una lista de tus hobbies (usando &lt;ul&gt;)</li>
+                    <li>Un &lt;section&gt; con una imagen tuya o de algo que te guste</li>
+                </ul>
+            </li>
+            <li>Un <strong>&lt;footer&gt;</strong> con un enlace a tu red social favorita</li>
+        </ul>
+        
+        <div class="nota nota-warning">
+            <strong>🎯 Reto extra (si quieres volverte pro):</strong><br>
+            Agrega una tabla con tus 3 películas o videojuegos favoritos (título, año, por qué te gusta). Y asegúrate de que todas las imágenes tengan su atributo <code>alt</code>.
+        </div>
+        
+        <div class="nota">
+            <strong>🔗 Recursos útiles para seguir aprendiendo:</strong><br>
+            • <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" style="color: #e6c38a;">MDN Web Docs - HTML</a> - La documentación oficial, la más confiable.<br>
+            • <a href="https://www.w3schools.com/html/" target="_blank" style="color: #e6c38a;">W3Schools - HTML Tutorial</a> - Ejemplos interactivos para practicar.<br>
+            • <a href="https://validator.w3.org/" target="_blank" style="color: #e6c38a;">Validador de HTML</a> - Para revisar que tu código esté bien escrito.
+        </div>
+        
+        <div class="nota nota-success" style="text-align: center;">
+            <strong>🌟 ¡Felicidades! 🌟</strong><br>
+            Ya diste el primer paso para convertirte en desarrollador web. HTML es el cimiento de todo. Practica, equivócate, arregla, y sigue adelante. Cada error es una lección más.
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href='index.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="Inicio">
+            Volver al inicio
+        </button>
+        <button class="btn-config" onclick="location.href='CSS.html'">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
+                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
+                 alt="CSS">
+            Siguiente: CSS →
+        </button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-btn')) {
+                var dropdown = document.getElementById("menuDropdown");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
