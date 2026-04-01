@@ -1,783 +1,1117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kerolmi · Manual HTML - Parte 3</title>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kerolmi · HTML desde Cero · Parte 3</title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background: linear-gradient(135deg, rgb(75, 15, 25), rgba(90, 100, 15, 0.7));
-            min-height: 100vh;
-            padding: 24px;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: rgba(255, 245, 220, 0.9);
-            position: relative;
-        }
+      body {
+        background: linear-gradient(
+          135deg,
+          rgb(75, 15, 25),
+          rgba(90, 100, 15, 0.7)
+        );
+        min-height: 100vh;
+        padding: 24px;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        color: rgba(255, 245, 220, 0.9);
+        position: relative;
+      }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(180, 50, 50, 0.2), transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-        }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 30% 40%,
+          rgba(180, 50, 50, 0.2),
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: -1;
+      }
 
-        @keyframes cinematicSlow {
-            0% {
-                opacity: 0;
-                transform: translateX(20px) scale(0.92);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
+      @keyframes cinematicSlow {
+        0% {
+          opacity: 0;
+          transform: translateX(20px) scale(0.92);
         }
-
-        @keyframes glowPulse {
-            0% {
-                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
-                border-left-color: rgba(200, 150, 50, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
-                border-left-color: rgba(220, 170, 60, 0.8);
-            }
-            100% {
-                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
-                border-left-color: rgba(200, 150, 50, 0.3);
-            }
+        100% {
+          opacity: 1;
+          transform: translateX(0) scale(1);
         }
+      }
 
-        .tarjeta-principal {
-            animation: cinematicSlow 1.9s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
-            border-radius: 16px;
-            background: rgba(40, 25, 30, 0.55);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(200, 150, 80, 0.4);
-            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
-            padding: 32px;
-            margin-bottom: 28px;
+      @keyframes glowPulse {
+        0% {
+          text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+          border-left-color: rgba(200, 150, 50, 0.3);
         }
-
-        .tarjeta-principal:hover {
-            border-color: rgba(220, 170, 100, 0.8);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
-            background: rgba(55, 35, 40, 0.65);
+        50% {
+          text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+          border-left-color: rgba(220, 170, 60, 0.8);
         }
+        100% {
+          text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+          border-left-color: rgba(200, 150, 50, 0.3);
+        }
+      }
 
+      .tarjeta-contenido {
+        background: rgba(40, 25, 30, 0.55);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(200, 150, 80, 0.4);
+        border-radius: 16px;
+        padding: 26px 22px;
+        margin-bottom: 28px;
+        transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+        animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05)
+          forwards;
+        opacity: 0;
+        animation-fill-mode: forwards;
+      }
+
+      .tarjeta-contenido:hover {
+        border-color: rgba(220, 170, 100, 0.8);
+        transform: translateY(-4px);
+        background: rgba(60, 38, 45, 0.7);
+        box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+      }
+
+      .fila {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+
+      .fila > .tarjeta-contenido {
+        flex: 1;
+        min-width: 280px;
+        margin-bottom: 0;
+      }
+
+      .delay-1 {
+        animation-delay: 0.05s;
+      }
+      .delay-2 {
+        animation-delay: 0.15s;
+      }
+      .delay-3 {
+        animation-delay: 0.35s;
+      }
+      .delay-4 {
+        animation-delay: 0.55s;
+      }
+
+      hr {
+        border: 0.5px solid rgba(200, 150, 80, 0.35);
+        margin: 16px 0;
+      }
+
+      .btn-config {
+        background: rgba(35, 22, 27, 0.7);
+        border: 1px solid rgba(200, 150, 80, 0.55);
+        border-radius: 8px;
+        padding: 10px 24px;
+        color: rgba(245, 225, 180, 0.9);
+        font-size: 11px;
+        font-family: inherit;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: all 0.4s ease;
+      }
+
+      .btn-config:hover {
+        background: rgba(90, 55, 65, 0.8);
+        border-color: rgba(230, 180, 110, 0.95);
+        transform: scale(0.98);
+      }
+
+      .contenedor-boton-izq {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 16px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .card-title {
+        font-size: 1.8rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+        border-left: 3px solid #c89a4c;
+        padding-left: 18px;
+        animation: glowPulse 4s ease-in-out infinite;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 8px;
+      }
+      li {
+        margin: 12px 0;
+        padding-left: 24px;
+        position: relative;
+        line-height: 1.5;
+      }
+      li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: rgba(200, 150, 80, 0.8);
+        font-size: 12px;
+      }
+
+      .codigo-bloque {
+        background: rgba(20, 15, 18, 0.7);
+        border: 1px solid rgba(200, 150, 80, 0.4);
+        border-radius: 12px;
+        padding: 16px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        overflow-x: auto;
+        color: rgba(200, 220, 150, 0.9);
+      }
+      .codigo-bloque pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .nota {
+        background: rgba(200, 150, 80, 0.15);
+        border-left: 3px solid #c89a4c;
+        padding: 12px 16px;
+        margin: 15px 0;
+        border-radius: 8px;
+        font-size: 13px;
+      }
+      .nota-warning {
+        background: rgba(200, 100, 50, 0.2);
+        border-left-color: #c97e3a;
+      }
+      .nota-success {
+        background: rgba(100, 180, 80, 0.15);
+        border-left-color: #7cb83c;
+      }
+      .nota-importante {
+        background: rgba(200, 150, 80, 0.25);
+        border-left-color: #e6c38a;
+      }
+
+      .menu-boton {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 101;
+      }
+      .menu-btn {
+        background: rgba(35, 22, 27, 0.8);
+        border: 1px solid rgba(200, 150, 80, 0.6);
+        border-radius: 30px;
+        padding: 10px 24px;
+        color: rgba(245, 225, 180, 0.9);
+        font-size: 12px;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+      }
+      .dropdown {
+        display: none;
+        position: fixed;
+        right: 20px;
+        top: 70px;
+        background: rgba(20, 15, 18, 0.95);
+        backdrop-filter: blur(16px);
+        min-width: 180px;
+        border: 1px solid rgba(200, 150, 80, 0.5);
+        border-radius: 12px;
+        z-index: 100;
+      }
+      .dropdown.show {
+        display: block;
+      }
+      .dropdown a {
+        color: rgba(245, 225, 200, 0.9);
+        padding: 12px 20px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+      }
+      .dropdown a:hover {
+        background: rgba(200, 150, 80, 0.2);
+        padding-left: 28px;
+      }
+
+      .lista-herramientas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin: 20px 0;
+      }
+      .herramienta-item {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 16px;
+        border-left: 3px solid #c89a4c;
+      }
+      .herramienta-item h3 {
+        color: #e6c38a;
+        margin-bottom: 8px;
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 768px) {
         .fila {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
+          flex-direction: column;
+          gap: 18px;
         }
-
-        .tarjeta-contenido {
-            flex: 1;
-            min-width: 280px;
-            padding: 26px 22px;
-            background: rgba(40, 25, 30, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            border: 1px solid rgba(200, 150, 80, 0.4);
-            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
-            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        body {
+          padding: 16px;
         }
-
-        .tarjeta-contenido:hover {
-            transform: translateY(-4px);
-            border-color: rgba(220, 170, 100, 0.8);
-            background: rgba(60, 38, 45, 0.7);
-            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
-        }
-
-        .delay-1 { animation-delay: 0.05s; }
-        .delay-2 { animation-delay: 0.15s; }
-        .delay-3 { animation-delay: 0.35s; }
-        .delay-4 { animation-delay: 0.55s; }
-
-        hr {
-            border: 0.5px solid rgba(200, 150, 80, 0.35);
-            margin: 16px 0;
-        }
-
-        .btn-config {
-            background: rgba(35, 22, 27, 0.7);
-            border: 1px solid rgba(200, 150, 80, 0.55);
-            border-radius: 8px;
-            padding: 10px 24px;
-            color: rgba(245, 225, 180, 0.9);
-            font-size: 11px;
-            font-family: inherit;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.2, 0.85, 0.4, 1);
-        }
-
-        .btn-config:hover {
-            background: rgba(90, 55, 65, 0.8);
-            border-color: rgba(230, 180, 110, 0.95);
-            color: rgba(255, 240, 200, 1);
-            transform: scale(0.98);
-        }
-
-        .contenedor-boton-izq {
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 16px;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
         .card-title {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            border-left: 3px solid #c89a4c;
-            padding-left: 18px;
-            letter-spacing: -0.2px;
-            animation: glowPulse 4s ease-in-out infinite;
+          font-size: 1.5rem;
         }
-
-        ul {
-            list-style: none;
-            padding-left: 8px;
-        }
-
-        li {
-            margin: 12px 0;
-            padding-left: 24px;
-            position: relative;
-            line-height: 1.5;
-        }
-
-        li::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: rgba(200, 150, 80, 0.8);
-            font-size: 12px;
-        }
-
-        .codigo-bloque {
-            background: rgba(20, 15, 18, 0.7);
-            border: 1px solid rgba(200, 150, 80, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            overflow-x: auto;
-            color: rgba(200, 220, 150, 0.9);
-        }
-
-        .codigo-bloque pre {
-            margin: 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .nota {
-            background: rgba(200, 150, 80, 0.15);
-            border-left: 3px solid #c89a4c;
-            padding: 12px 16px;
-            margin: 15px 0;
-            border-radius: 8px;
-            font-size: 13px;
-        }
-
-        .nota-warning {
-            background: rgba(200, 100, 50, 0.2);
-            border-left-color: #c97e3a;
-        }
-
-        .nota-success {
-            background: rgba(100, 180, 80, 0.15);
-            border-left-color: #7cb83c;
-        }
-
-        .menu-boton {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 101;
-        }
-
-        .menu-btn {
-            background: rgba(35, 22, 27, 0.8);
-            border: 1px solid rgba(200, 150, 80, 0.6);
-            border-radius: 30px;
-            padding: 10px 24px;
-            color: rgba(245, 225, 180, 0.9);
-            font-size: 12px;
-            font-family: inherit;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
-
-        .menu-btn:hover {
-            background: rgba(90, 55, 65, 0.9);
-            border-color: rgba(230, 180, 110, 0.9);
-            transform: scale(0.97);
-        }
-
-        .dropdown {
-            display: none;
-            position: fixed;
-            right: 20px;
-            top: 70px;
-            background: rgba(20, 15, 18, 0.95);
-            backdrop-filter: blur(16px);
-            min-width: 180px;
-            border: 1px solid rgba(200, 150, 80, 0.5);
-            border-radius: 12px;
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .dropdown.show {
-            display: block;
-        }
-
-        .dropdown a {
-            color: rgba(245, 225, 200, 0.9);
-            padding: 12px 20px;
-            text-decoration: none;
-            display: block;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
-        }
-
-        .dropdown a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown a:hover {
-            background: rgba(200, 150, 80, 0.2);
-            padding-left: 28px;
-            color: rgba(255, 235, 180, 1);
-        }
-
-        .tabla-etiquetas {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        .tabla-etiquetas th,
-        .tabla-etiquetas td {
-            border: 1px solid rgba(200, 150, 80, 0.3);
-            padding: 10px;
-            text-align: left;
-        }
-
-        .tabla-etiquetas th {
-            background: rgba(200, 150, 80, 0.2);
-            font-weight: 600;
-        }
-
-        .tabla-etiquetas td {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .ejemplo-color {
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        @media (max-width: 768px) {
-            .fila {
-                flex-direction: column;
-                gap: 18px;
-            }
-            body {
-                padding: 16px;
-            }
-            .tarjeta-principal {
-                padding: 24px;
-            }
-            .card-title {
-                font-size: 1.5rem;
-            }
-            .menu-boton {
-                top: 12px;
-                right: 12px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="menu-boton">
-        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
-        <div id="menuDropdown" class="dropdown">
-            <a href="index.html">Inicio</a>
-            <a href="HTML.html">HTML - Parte 1</a>
-            <a href="HTML2.html">HTML - Parte 2</a>
-            <a href="HTML3.html">HTML - Parte 3</a>
-            <a href="CSS.html">CSS</a>
-            <a href="JavaScript.html">JavaScript</a>
-        </div>
+      <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+      <div id="menuDropdown" class="dropdown">
+        <a href="index.html">Inicio</a>
+        <a href="HTML.html">HTML - Parte 1</a>
+        <a href="HTML2.html">HTML - Parte 2</a>
+        <a href="HTML3.html">HTML - Parte 3</a>
+        <a href="CSS.html">CSS</a>
+        <a href="JavaScript.html">JavaScript</a>
+      </div>
     </div>
 
-    <div class="tarjeta-principal delay-1">
-        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                 style="width: 50px; height: 50px;" 
-                 alt="HTML5">
-            <h1 style="font-size: 2.2rem;">Manual de HTML - Parte 3</h1>
-        </div>
-        <hr>
-        <p style="font-size: 14px; letter-spacing: 0.3px;">Colores, SVG, Multimedia avanzada, Iframes y todo lo que necesitas para cerrar los fundamentos básicos de HTML</p>
+    <!-- Encabezado -->
+    <div class="tarjeta-contenido delay-1">
+      <div
+        style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap"
+      >
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+          style="width: 50px; height: 50px"
+          alt="VS Code"
+        />
+        <h1 style="font-size: 2rem">HTML desde Cero · Parte 3</h1>
+      </div>
+      <hr />
+      <p>
+        Ya sabes escribir HTML. Sabes qué es una etiqueta, un atributo, cómo
+        hacer formularios, cómo poner videos, cómo guardar datos. Pero ahora
+        viene lo importante:
+        <strong
+          >cómo trabajar como un profesional sin gastar un solo peso</strong
+        >. Porque hay mucha gente que cree que necesita comprar programas caros
+        o pagar hosting para empezar. Y no es así. En esta parte te voy a
+        mostrar las herramientas gratuitas que usan los desarrolladores de
+        verdad, cómo organizar tu código, cómo poner tu página en internet sin
+        pagar, y las buenas prácticas que te van a ahorrar años de dolores de
+        cabeza.
+      </p>
     </div>
 
-    <!-- Colores en HTML -->
+    <!-- ==================== 1. HERRAMIENTAS GRATUITAS ==================== -->
+    <div class="tarjeta-contenido delay-2">
+      <div class="card-title">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+          style="
+            width: 28px;
+            height: 28px;
+            vertical-align: middle;
+            margin-right: 12px;
+          "
+          alt="Herramientas"
+        />
+        1. Herramientas gratuitas para programar (sin pagar nada)
+      </div>
+      <hr />
+      <p>
+        Para hacer páginas web solo necesitas dos cosas: un
+        <strong>editor de código</strong> (donde escribes el HTML) y un
+        <strong>navegador</strong> (para ver lo que hiciste). Ambas son gratis.
+      </p>
+
+      <div class="lista-herramientas">
+        <div class="herramienta-item">
+          <h3>
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+              style="width: 15px; height: 15px"
+              alt="VS Code"
+            />
+            Visual Studio Code (VS Code)
+          </h3>
+          <p>
+            Es el editor que usan la mayoría de los desarrolladores
+            profesionales. Es gratis, liviano y tiene herramientas que te ayudan
+            a escribir más rápido. Lo puedes descargar de
+            <a href="https://code.visualstudio.com" target="_blank"
+              >code.visualstudio.com</a
+            >. Funciona en Windows, Mac y Linux.
+          </p>
+        </div>
+        <div class="herramienta-item">
+          <h3>
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firefox/firefox-original.svg"
+              style="width: 15px; height: 15px"
+              alt="Firefox"
+            />
+            Google Chrome / Firefox
+          </h3>
+          <p>
+            Cualquier navegador moderno sirve. Pero Chrome y Firefox tienen
+            herramientas para desarrolladores (presiona F12) que te permiten
+            inspeccionar tu código, ver errores y probar cosas en tiempo real.
+          </p>
+        </div>
+        <div class="herramienta-item">
+          <h3>
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+              style="width: 15px; height: 15px"
+              alt="GitHub"
+            />
+            Git y GitHub
+          </h3>
+          <p>
+            Git es un programa que guarda el historial de tus cambios (como un
+            "control de versiones"). GitHub es una página donde puedes subir tu
+            código gratis. Es como un respaldo en la nube y también sirve para
+            mostrar tu trabajo.
+          </p>
+        </div>
+        <div class="herramienta-item">
+          <h3>Imágenes gratis</h3>
+          <p>
+            No necesitas pagar por fotos. Páginas como
+            <strong>Unsplash, Pexels, Pixabay</strong> tienen imágenes gratis
+            que puedes usar en tus proyectos. Solo asegúrate de leer los
+            términos de uso.
+          </p>
+        </div>
+      </div>
+
+      <div class="nota-importante">
+        <strong>¿Y el bloc de notas?</strong> Técnicamente puedes escribir HTML
+        en el bloc de notas. Pero es como querer construir una casa con un
+        martillo de juguete. VS Code te ayuda con colores (para que veas qué es
+        una etiqueta y qué es texto), te sugiere etiquetas mientras escribes, y
+        te avisa si te equivocaste. Vale la pena instalarlo.
+      </div>
+    </div>
+
+    <!-- ==================== 2. VS CODE PASO A PASO ==================== -->
     <div class="fila">
-        <div class="tarjeta-contenido delay-2">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="Colores">
-                1. Colores en HTML
-            </div>
-            <hr>
-            <p>En HTML (y CSS) puedes poner colores de varias formas. Los colores se usan en atributos como <code>color</code>, <code>bgcolor</code>, <code>background</code>, etc. Hay 4 formas principales de escribir un color:</p>
-            
-            <div style="margin: 15px 0;">
-                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
-                    <strong style="color: #e6c38a;">🎨 1. Nombres de colores</strong>
-                    <p style="font-size: 13px; margin-top: 5px;">Los más fáciles de recordar. HTML reconoce 140 nombres de colores.</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-                        <span style="background: red; padding: 4px 8px; border-radius: 4px;">red</span>
-                        <span style="background: blue; padding: 4px 8px; border-radius: 4px;">blue</span>
-                        <span style="background: green; padding: 4px 8px; border-radius: 4px;">green</span>
-                        <span style="background: yellow; color: black; padding: 4px 8px; border-radius: 4px;">yellow</span>
-                        <span style="background: orange; padding: 4px 8px; border-radius: 4px;">orange</span>
-                        <span style="background: purple; padding: 4px 8px; border-radius: 4px;">purple</span>
-                        <span style="background: pink; color: black; padding: 4px 8px; border-radius: 4px;">pink</span>
-                        <span style="background: cyan; color: black; padding: 4px 8px; border-radius: 4px;">cyan</span>
-                    </div>
-                    <div class="codigo-bloque" style="margin-top: 10px;">
-                        <pre>&lt;font color="red"&gt;Texto rojo&lt;/font&gt;
-&lt;body bgcolor="lightblue"&gt;...&lt;/body&gt;</pre>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
-                    <strong style="color: #e6c38a;">🎨 2. RGB (Red, Green, Blue)</strong>
-                    <p style="font-size: 13px; margin-top: 5px;">Define la cantidad de rojo, verde y azul. Cada valor va de 0 a 255.</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-                        <div><span class="ejemplo-color" style="background: rgb(255,0,0);"></span> rgb(255,0,0) = rojo</div>
-                        <div><span class="ejemplo-color" style="background: rgb(0,255,0);"></span> rgb(0,255,0) = verde</div>
-                        <div><span class="ejemplo-color" style="background: rgb(0,0,255);"></span> rgb(0,0,255) = azul</div>
-                        <div><span class="ejemplo-color" style="background: rgb(255,255,0);"></span> rgb(255,255,0) = amarillo</div>
-                        <div><span class="ejemplo-color" style="background: rgb(255,0,255);"></span> rgb(255,0,255) = magenta</div>
-                        <div><span class="ejemplo-color" style="background: rgb(0,255,255);"></span> rgb(0,255,255) = cian</div>
-                    </div>
-                    <div class="codigo-bloque" style="margin-top: 10px;">
-                        <pre>&lt;font color="rgb(255,100,50)"&gt;Texto naranja&lt;/font&gt;</pre>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
-                    <strong style="color: #e6c38a;">🎨 3. HEX (Hexadecimal)</strong>
-                    <p style="font-size: 13px; margin-top: 5px;">Es la forma más común. Empieza con # y luego 6 dígitos (0-9 y A-F).</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-                        <div><span class="ejemplo-color" style="background: #FF0000;"></span> #FF0000 = rojo</div>
-                        <div><span class="ejemplo-color" style="background: #00FF00;"></span> #00FF00 = verde</div>
-                        <div><span class="ejemplo-color" style="background: #0000FF;"></span> #0000FF = azul</div>
-                        <div><span class="ejemplo-color" style="background: #FFFF00;"></span> #FFFF00 = amarillo</div>
-                        <div><span class="ejemplo-color" style="background: #FF00FF;"></span> #FF00FF = magenta</div>
-                        <div><span class="ejemplo-color" style="background: #00FFFF;"></span> #00FFFF = cian</div>
-                        <div><span class="ejemplo-color" style="background: #000000;"></span> #000000 = negro</div>
-                        <div><span class="ejemplo-color" style="background: #FFFFFF;"></span> #FFFFFF = blanco</div>
-                        <div><span class="ejemplo-color" style="background: #c89a4c;"></span> #c89a4c = dorado</div>
-                    </div>
-                    <div class="codigo-bloque" style="margin-top: 10px;">
-                        <pre>&lt;font color="#c89a4c"&gt;Texto dorado&lt;/font&gt;</pre>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px;">
-                    <strong style="color: #e6c38a;">🎨 4. HSL (Hue, Saturation, Lightness)</strong>
-                    <p style="font-size: 13px; margin-top: 5px;">Define el color por matiz (0-360), saturación (0-100%) y luminosidad (0-100%).</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-                        <div><span class="ejemplo-color" style="background: hsl(0,100%,50%);"></span> hsl(0,100%,50%) = rojo</div>
-                        <div><span class="ejemplo-color" style="background: hsl(120,100%,50%);"></span> hsl(120,100%,50%) = verde</div>
-                        <div><span class="ejemplo-color" style="background: hsl(240,100%,50%);"></span> hsl(240,100%,50%) = azul</div>
-                        <div><span class="ejemplo-color" style="background: hsl(60,100%,50%);"></span> hsl(60,100%,50%) = amarillo</div>
-                    </div>
-                    <div class="codigo-bloque" style="margin-top: 10px;">
-                        <pre>&lt;font color="hsl(30,100%,50%)"&gt;Texto naranja&lt;/font&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="nota">
-                <strong>💡 Consejo:</strong> Para páginas web modernas, lo más usado es <strong>HEX</strong> (#RRGGBB) y <strong>RGB/RGBA</strong>. RGBA es como RGB pero con un canal alpha para transparencia: <code>rgba(255,100,50,0.5)</code>.
-            </div>
-        </div>
-
-        <div class="tarjeta-contenido delay-3">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="SVG">
-                2. SVG: Gráficos Vectoriales
-            </div>
-            <hr>
-            <p><strong>SVG (Scalable Vector Graphics)</strong> es una forma de dibujar gráficos directamente en HTML. A diferencia de las imágenes normales (jpg, png), los SVG <strong>no pierden calidad</strong> al agrandarse. Son perfectos para logos, iconos e ilustraciones.</p>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;!-- Círculo --&gt;
-&lt;svg width="100" height="100"&gt;
-  &lt;circle cx="50" cy="50" r="40" 
-          fill="#e6c38a" stroke="#c89a4c" stroke-width="3"/&gt;
-&lt;/svg&gt;
-
-&lt;!-- Rectángulo con bordes redondeados --&gt;
-&lt;svg width="150" height="80"&gt;
-  &lt;rect x="10" y="10" width="130" height="60" 
-        fill="#c97e3a" rx="15"/&gt;
-&lt;/svg&gt;
-
-&lt;!-- Línea --&gt;
-&lt;svg width="200" height="50"&gt;
-  &lt;line x1="10" y1="25" x2="190" y2="25" 
-        stroke="#fff" stroke-width="3"/&gt;
-&lt;/svg&gt;
-
-&lt;!-- Estrella con polygon --&gt;
-&lt;svg width="100" height="100"&gt;
-  &lt;polygon points="50,10 61,35 90,35 68,52 79,80 50,63 21,80 32,52 10,35 39,35" 
-           fill="#e6c38a" /&gt;
-&lt;/svg&gt;</pre>
-            </div>
-            
-            <p><strong>Formas básicas de SVG:</strong></p>
-            <ul>
-                <li><strong>&lt;circle&gt;</strong> - Círculo: cx, cy (centro), r (radio)</li>
-                <li><strong>&lt;rect&gt;</strong> - Rectángulo: x, y, width, height, rx (bordes redondeados)</li>
-                <li><strong>&lt;line&gt;</strong> - Línea: x1,y1 (inicio) x2,y2 (fin)</li>
-                <li><strong>&lt;polygon&gt;</strong> - Polígono: points (coordenadas separadas por espacios)</li>
-                <li><strong>&lt;path&gt;</strong> - Forma personalizada (más avanzado)</li>
-                <li><strong>&lt;text&gt;</strong> - Texto dentro del SVG</li>
-            </ul>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;!-- Texto dentro de SVG --&gt;
-&lt;svg width="200" height="50"&gt;
-  &lt;text x="20" y="35" fill="#e6c38a" font-size="20"&gt;Hola SVG!&lt;/text&gt;
-&lt;/svg&gt;</pre>
-            </div>
-            
-            <div class="nota">
-                <strong>🖼️ ¿Para qué sirve SVG?</strong><br>
-                Logos que se ven bien en cualquier tamaño, iconos que puedes cambiar de color con CSS, gráficos simples, animaciones básicas, mapas interactivos.
-            </div>
-        </div>
-    </div>
-
-    <!-- Iframes y Multimedia Avanzada -->
-    <div class="fila">
-        <div class="tarjeta-contenido delay-2">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="Iframes">
-                3. Iframes: Páginas dentro de páginas
-            </div>
-            <hr>
-            <p>Un <strong>&lt;iframe&gt;</strong> es una "ventana" que muestra otra página web dentro de la tuya. Es súper útil para incrustar videos de YouTube, mapas de Google, widgets de redes sociales, etc.</p>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;!-- Iframe básico --&gt;
-&lt;iframe src="https://ejemplo.com" width="100%" height="300"&gt;&lt;/iframe&gt;
-
-&lt;!-- Video de YouTube --&gt;
-&lt;iframe width="560" height="315" 
-  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-  frameborder="0" 
-  allowfullscreen&gt;
-&lt;/iframe&gt;
-
-&lt;!-- Mapa de Google Maps --&gt;
-&lt;iframe 
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.123456!2d-0.123456!3d40.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDA3JzI0LjQiTiAwwrAwNyc1Ny40Ilc!5e0!3m2!1ses!2ses!4v1234567890" 
-  width="600" height="450" 
-  style="border:0;" 
-  allowfullscreen="" 
-  loading="lazy"&gt;
-&lt;/iframe&gt;</pre>
-            </div>
-            
-            <p><strong>Atributos importantes del iframe:</strong></p>
-            <ul>
-                <li><strong>src</strong> - La URL de lo que quieres mostrar.</li>
-                <li><strong>width / height</strong> - Tamaño en píxeles o porcentaje.</li>
-                <li><strong>frameborder</strong> - Si muestra borde (0 = sin borde).</li>
-                <li><strong>allowfullscreen</strong> - Permite pantalla completa.</li>
-                <li><strong>loading="lazy"</strong> - Carga solo cuando el usuario se acerca (mejora rendimiento).</li>
-                <li><strong>sandbox</strong> - Restricciones de seguridad para el contenido incrustado.</li>
-            </ul>
-            
-            <div class="nota nota-warning">
-                <strong>⚠️ Dónde conseguir código de iframe:</strong><br>
-                YouTube: Compartir → Insertar → Copias el código.<br>
-                Google Maps: Compartir → Insertar un mapa → Copias el código.
-            </div>
-        </div>
-
-        <div class="tarjeta-contenido delay-3">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="Multimedia">
-                4. Audio y Video (Repaso)
-            </div>
-            <hr>
-            <p>Repaso de multimedia nativa con más detalles sobre atributos útiles:</p>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;!-- Audio con controles --&gt;
-&lt;audio controls&gt;
-  &lt;source src="cancion.mp3" type="audio/mpeg"&gt;
-  &lt;source src="cancion.ogg" type="audio/ogg"&gt;
-  Tu navegador no soporta audio.
-&lt;/audio&gt;
-
-&lt;!-- Video con poster (imagen de vista previa) --&gt;
-&lt;video width="640" height="360" controls poster="vista-previa.jpg"&gt;
-  &lt;source src="video.mp4" type="video/mp4"&gt;
-  &lt;source src="video.webm" type="video/webm"&gt;
-  Tu navegador no soporta video.
-&lt;/video&gt;
-
-&lt;!-- Video en bucle y silenciado (útil para fondos) --&gt;
-&lt;video autoplay loop muted&gt;
-  &lt;source src="fondo.mp4" type="video/mp4"&gt;
-&lt;/video&gt;</pre>
-            </div>
-            
-            <p><strong>Atributos de audio y video:</strong></p>
-            <ul>
-                <li><strong>controls</strong> - Muestra botones de reproducción.</li>
-                <li><strong>autoplay</strong> - Empieza automáticamente (en muchos navegadores requiere muted).</li>
-                <li><strong>loop</strong> - Se repite en bucle.</li>
-                <li><strong>muted</strong> - Empieza silenciado.</li>
-                <li><strong>poster</strong> - (Solo video) Imagen que se ve antes de reproducir.</li>
-                <li><strong>preload</strong> - Carga el video antes de reproducir (auto, metadata, none).</li>
-            </ul>
-            
-            <div class="nota nota-success">
-                <strong>✅ Formatos recomendados:</strong><br>
-                Audio: MP3 (universal), OGG (alternativo)<br>
-                Video: MP4 (H.264) es el más compatible, WebM es alternativa libre.
-            </div>
-        </div>
-    </div>
-
-    <!-- Metadatos Avanzados y Favicon -->
-    <div class="fila">
-        <div class="tarjeta-contenido delay-2">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="Metadatos">
-                5. Metadatos Avanzados (SEO)
-            </div>
-            <hr>
-            <p>Los metadatos van dentro del <code>&lt;head&gt;</code> y le dan información a los navegadores y a Google sobre tu página.</p>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;head&gt;
-  &lt;!-- Metadatos básicos --&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  
-  &lt;!-- SEO: Descripción que aparece en Google --&gt;
-  &lt;meta name="description" content="Aprende HTML desde cero con ejemplos prácticos y manual completo"&gt;
-  
-  &lt;!-- SEO: Palabras clave (menos importante hoy en día) --&gt;
-  &lt;meta name="keywords" content="HTML, tutorial, web, aprender, manual"&gt;
-  
-  &lt;!-- Autor de la página --&gt;
-  &lt;meta name="author" content="Kerolmi"&gt;
-  
-  &lt;!-- Control de robots de Google --&gt;
-  &lt;meta name="robots" content="index, follow"&gt;
-  
-  &lt;!-- Redes sociales (Open Graph) --&gt;
-  &lt;meta property="og:title" content="Manual de HTML - Kerolmi"&gt;
-  &lt;meta property="og:description" content="Aprende HTML fácil y rápido"&gt;
-  &lt;meta property="og:image" content="https://tusitio.com/imagen.jpg"&gt;
-  &lt;meta property="og:url" content="https://tusitio.com/html.html"&gt;
-  &lt;meta property="og:type" content="website"&gt;
-  
-  &lt;!-- Twitter Cards --&gt;
-  &lt;meta name="twitter:card" content="summary_large_image"&gt;
-  &lt;meta name="twitter:title" content="Manual de HTML - Kerolmi"&gt;
-  &lt;meta name="twitter:description" content="Aprende HTML fácil y rápido"&gt;
-  &lt;meta name="twitter:image" content="https://tusitio.com/imagen.jpg"&gt;
-  
-  &lt;title&gt;Kerolmi · Manual de HTML&lt;/title&gt;
-&lt;/head&gt;</pre>
-            </div>
-            
-            <div class="nota">
-                <strong>📈 ¿Por qué son importantes?</strong><br>
-                <strong>Meta description</strong> - Es el texto que aparece debajo del título en Google. ¡Influye en que la gente haga clic!<br>
-                <strong>Open Graph</strong> - Controla cómo se ve tu página cuando la compartes en Facebook, WhatsApp, Twitter.
-            </div>
-        </div>
-
-        <div class="tarjeta-contenido delay-3">
-            <div class="card-title">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" 
-                     style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                     alt="Favicon">
-                6. Favicon y Link
-            </div>
-            <hr>
-            <p>El <strong>favicon</strong> es ese pequeño ícono que aparece en la pestaña del navegador. También puedes usar la etiqueta <code>&lt;link&gt;</code> para enlazar otros recursos.</p>
-            
-            <div class="codigo-bloque">
-                <pre>&lt;!-- Favicon básico (icono en la pestaña) --&gt;
-&lt;link rel="icon" type="image/x-icon" href="favicon.ico"&gt;
-&lt;!-- O para PNG --&gt;
-&lt;link rel="icon" type="image/png" href="favicon.png"&gt;
-
-&lt;!-- Tamaños diferentes para dispositivos --&gt;
-&lt;link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"&gt;
-
-&lt;!-- Enlazar CSS externo --&gt;
-&lt;link rel="stylesheet" href="estilos.css"&gt;
-
-&lt;!-- Enlazar fuentes de Google Fonts --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"&gt;</pre>
-            </div>
-            
-            <p><strong>Usos de &lt;link&gt;:</strong></p>
-            <ul>
-                <li><strong>rel="icon"</strong> - Favicon de la página.</li>
-                <li><strong>rel="stylesheet"</strong> - Archivo CSS externo.</li>
-                <li><strong>rel="preconnect"</strong> - Mejora rendimiento para recursos externos.</li>
-                <li><strong>rel="canonical"</strong> - URL principal (evita contenido duplicado).</li>
-                <li><strong>rel="alternate"</strong> - Versiones alternativas (idiomas, RSS).</li>
-            </ul>
-            
-            <div class="nota nota-success">
-                <strong>✅ Tip:</strong> Los favicon se ven en la pestaña, en marcadores, y en la pantalla de inicio de móviles. Dale identidad visual a tu página con un buen icono.
-            </div>
-        </div>
-    </div>
-
-    <!-- Ejercicio Final Integrador -->
-    <div class="tarjeta-contenido delay-4">
+      <div class="tarjeta-contenido delay-2">
         <div class="card-title">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" 
-                 style="width: 28px; height: 28px; vertical-align: middle; margin-right: 12px;" 
-                 alt="Ejercicio">
-            🚀 Proyecto Final: Tu Primera Página Completa
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+            "
+            alt="VS Code"
+          />
+          2. Cómo usar VS Code (lo básico que necesitas saber)
         </div>
-        <hr>
-        <p>¡Felicidades! Has llegado al final de los fundamentos básicos de HTML. Ahora es momento de crear una página que integre TODO lo que aprendiste en las 3 partes:</p>
-        
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin: 15px 0;">
-            <strong style="color: #e6c38a;">📋 Requisitos del proyecto:</strong>
-            <ul style="margin-top: 10px;">
-                <li><strong>Estructura semántica</strong> - &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt;</li>
-                <li><strong>Enlaces internos</strong> - Menú que navegue dentro de la misma página usando #id</li>
-                <li><strong>Enlaces externos</strong> - Que abran en nueva pestaña (target="_blank")</li>
-                <li><strong>Listas</strong> - Al menos una lista ordenada y una desordenada</li>
-                <li><strong>Tabla</strong> - Con información de horarios, precios, o tus cosas favoritas</li>
-                <li><strong>Formulario</strong> - Con diferentes tipos de input (text, email, date, color, range)</li>
-                <li><strong>Imágenes</strong> - Con atributo alt obligatorio</li>
-                <li><strong>SVG o Canvas</strong> - Dibuja algo (un logo, un círculo, una estrella)</li>
-                <li><strong>Iframe</strong> - Incrusta un video de YouTube o un mapa de Google Maps</li>
-                <li><strong>Colores</strong> - Usa HEX, RGB y nombres de colores en diferentes elementos</li>
-                <li><strong>Favicon</strong> - Ponle un icono a tu página</li>
-                <li><strong>Meta descripción</strong> - Para que Google muestre un buen resumen</li>
-                <li><strong>Responsive</strong> - Usa la meta etiqueta viewport</li>
-            </ul>
+        <hr />
+        <p>
+          Cuando abres VS Code por primera vez, parece complicado. Pero solo
+          necesitas saber unas pocas cosas para empezar.
+        </p>
+
+        <p><strong>Crear un archivo nuevo:</strong></p>
+        <ul>
+          <li>Archivo → Nuevo archivo (o Ctrl + N).</li>
+          <li>Escribe tu código HTML.</li>
+          <li>
+            Archivo → Guardar (o Ctrl + S). Para escogerle el nombre, si o si
+            debes darle este nombre "index.html" sino, jamas cargara la pagina,
+            porque es el nombre por defecto que busca el navegador.
+          </li>
+        </ul>
+
+        <p><strong>Abrir una carpeta (recomendado):</strong></p>
+        <ul>
+          <li>
+            Es mejor tener una carpeta para cada proyecto. Archivo → Abrir
+            carpeta. Elige o crea una carpeta donde vas a guardar tus archivos.
+          </li>
+          <li>
+            En el panel izquierdo ves todos tus archivos. Puedes crear nuevos
+            archivos haciendo clic en los íconos.
+          </li>
+        </ul>
+
+        <p><strong>Extensiones útiles (son gratis):</strong></p>
+        <ul>
+          <li>
+            <strong>Live Server</strong> — Instálala. Te permite ver tu página
+            en el navegador y que se actualice sola cada vez que guardas
+            cambios. Haces clic derecho en tu archivo HTML y eliges "Open with
+            Live Server".
+          </li>
+          <li>
+            <strong>Prettier</strong> — Ordena tu código automáticamente. Le
+            pones un atajo (Alt + Shift + F) y te limpia las indentaciones.
+          </li>
+          <li>
+            <strong>Auto Rename Tag</strong> — Cuando cambias el nombre de una
+            etiqueta de apertura, cambia automáticamente la de cierre.
+          </li>
+        </ul>
+
+        <div class="codigo-bloque">
+          <pre>
+Atajos de teclado que te van a salvar la vida:
+- Ctrl + S : Guardar
+- Ctrl + Z : Deshacer
+- Ctrl + Shift + Z : Rehacer
+- Ctrl + F : Buscar dentro del archivo
+- Ctrl + D : Selecciona la siguiente coincidencia (útil para cambiar varias palabras iguales)
+- Ctrl + / : Comenta o descomenta una línea</pre
+          >
         </div>
-        
-        <div class="nota nota-warning">
-            <strong>🎯 Reto extra:</strong><br>
-            Crea un <strong>menú desplegable</strong> usando solo HTML (sin JavaScript). Pista: puedes usar &lt;select&gt; y &lt;option&gt; o &lt;details&gt; y &lt;summary&gt;.
-        </div>
-        
+
         <div class="nota">
-            <strong>🔗 Recursos útiles para seguir aprendiendo:</strong><br>
-            • <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" style="color: #e6c38a;">MDN Web Docs - HTML</a> - La documentación oficial.<br>
-            • <a href="https://www.w3schools.com/html/" target="_blank" style="color: #e6c38a;">W3Schools - HTML Tutorial</a> - Ejemplos interactivos.<br>
-            • <a href="https://htmlcolorcodes.com/" target="_blank" style="color: #e6c38a;">HTML Color Codes</a> - Para elegir colores fácilmente.<br>
-            • <a href="https://validator.w3.org/" target="_blank" style="color: #e6c38a;">Validador de HTML</a> - Revisa que tu código esté bien escrito.
+          <strong>Tip:</strong> Si escribes <code>!</code> (solo el signo de
+          exclamación) y presionas Enter en un archivo HTML, VS Code te genera
+          automáticamente la estructura base del documento. Es un atajo que te
+          ahorra tiempo.
         </div>
-        
-        <div class="nota nota-success" style="text-align: center;">
-            <strong>🌟 ¡Ya dominas los fundamentos básicos de HTML! 🌟</strong><br>
-            Ahora estás listo para aprender CSS y darle estilo a tus páginas. El camino continúa. ¡Sigue así! 🚀
+      </div>
+
+      <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+            "
+            alt="Navegador"
+          />
+          3. Ver tu página en el navegador
         </div>
+        <hr />
+        <p>
+          Hay varias formas de ver lo que estás construyendo. Todas son gratis.
+        </p>
+
+        <p><strong>Opción 1: Abrir el archivo directamente</strong></p>
+        <ul>
+          <li>Ve a la carpeta donde guardaste tu archivo .html.</li>
+          <li>Haz doble clic en el archivo. Se abrirá en tu navegador.</li>
+          <li>
+            Si haces cambios, guarda y actualiza la página (F5) para verlos.
+          </li>
+        </ul>
+
+        <p><strong>Opción 2: Live Server (la mejor)</strong></p>
+        <ul>
+          <li>Instala la extensión Live Server en VS Code.</li>
+          <li>
+            Haz clic derecho en tu archivo HTML y elige "Open with Live Server".
+          </li>
+          <li>
+            Se abre una pestaña en el navegador. Cada vez que guardas (Ctrl+S),
+            la página se actualiza sola. No tienes que recargar manualmente.
+          </li>
+        </ul>
+
+        <p><strong>Opción 3: Ver desde el teléfono</strong></p>
+        <ul>
+          <li>
+            Si estás usando Live Server, fíjate en la dirección que te aparece
+            (algo como <code>http://127.0.0.1:5500</code>).
+          </li>
+          <li>
+            Tu computadora y tu teléfono deben estar en la misma red WiFi.
+          </li>
+          <li>
+            En el teléfono, abre el navegador y escribe la dirección de tu
+            computadora pero con la IP. Ejemplo:
+            <code>http://192.168.1.10:5500</code>.
+          </li>
+          <li>
+            Así puedes ver cómo se ve tu página en móvil mientras la
+            desarrollas.
+          </li>
+        </ul>
+
+        <div class="nota-success">
+          <strong>Herramienta secreta: Chrome DevTools</strong><br />
+          Presiona F12 en Chrome. Se abre un panel donde puedes ver el código de
+          cualquier página, inspeccionar elementos, probar estilos en vivo, ver
+          errores, y simular cómo se ve en diferentes tamaños de pantalla. Es la
+          herramienta más poderosa que tienes. Aprende a usarla y te vas a
+          convertir en otro nivel.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 3. ORGANIZACIÓN DE ARCHIVOS ==================== -->
+    <div class="fila">
+      <div class="tarjeta-contenido delay-2">
+        <div class="card-title">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+            "
+            alt="Organización"
+          />
+          4. Cómo organizar tus archivos (para no volverte loco)
+        </div>
+        <hr />
+        <p>
+          Cuando empiezas, es fácil tener todos los archivos en el mismo lugar.
+          Pero cuando tu proyecto crece, se vuelve un caos. Por eso los
+          desarrolladores organizan las carpetas desde el principio.
+        </p>
+
+        <div class="codigo-bloque">
+          <pre>
+mi-proyecto/
+│
+├── index.html          (la página principal)
+├── acerca.html         (otra página)
+├── contacto.html       (otra página)
+│
+├── css/
+│   └── estilo.css      (todos los estilos van aquí)
+│
+├── js/
+│   └── script.js       (todo JavaScript va aquí)
+│
+├── img/
+│   ├── foto1.jpg       (todas las imágenes)
+│   ├── foto2.png
+│   └── icono.svg
+│
+├── fonts/
+│   └── (fuentes personalizadas si usas)
+│
+└── videos/             (si tienes videos propios)
+    └── presentacion.mp4</pre
+          >
+        </div>
+
+        <p><strong>Reglas simples:</strong></p>
+        <ul>
+          <li>
+            La página principal SIEMPRE se llama <strong>index.html</strong>. Es
+            la que el navegador busca por defecto.
+          </li>
+          <li>
+            Los archivos de CSS (estilos) van en una carpeta llamada
+            <strong>css/</strong>.
+          </li>
+          <li>
+            Los archivos de JavaScript van en una carpeta llamada
+            <strong>js/</strong>.
+          </li>
+          <li>
+            Las imágenes van en <strong>img/</strong> o
+            <strong>images/</strong>.
+          </li>
+          <li>
+            No uses espacios en los nombres de archivos. Usa guiones:
+            <code>mi-foto.jpg</code> en lugar de <code>mi foto.jpg</code>. Los
+            espacios pueden dar problemas.
+          </li>
+          <li>
+            Usa minúsculas para los nombres de archivos. En algunos servidores,
+            <code>Imagen.JPG</code> y <code>imagen.jpg</code> son diferentes.
+          </li>
+        </ul>
+
+        <div class="codigo-bloque">
+          <pre>
+&lt;!-- Cómo enlazar archivos cuando están en carpetas --&gt;
+
+&lt;!-- CSS (dentro de la carpeta css) --&gt;
+&lt;link rel="stylesheet" href="css/estilo.css"&gt;
+
+&lt;!-- JavaScript (dentro de la carpeta js) --&gt;
+&lt;script src="js/script.js"&gt;&lt;/script&gt;
+
+&lt;!-- Imagen (dentro de la carpeta img) --&gt;
+&lt;img src="img/foto.jpg" alt="descripción"&gt;
+
+&lt;!-- Enlace a otra página que está en la misma carpeta --&gt;
+&lt;a href="acerca.html"&gt;Acerca de&lt;/a&gt;
+
+&lt;!-- Enlace a una página que está en una subcarpeta --&gt;
+&lt;a href="productos/catalogo.html"&gt;Catálogo&lt;/a&gt;</pre
+          >
+        </div>
+      </div>
+
+      <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+              filter: invert(0.7);
+            "
+            alt="GitHub"
+          />
+          5. Subir tu página a internet sin pagar
+        </div>
+        <hr />
+        <p>
+          Tener tu página en tu computadora está bien, pero lo bonito es que
+          otros la vean. Hay formas gratuitas de subir tu página a internet. La
+          más popular es <strong>GitHub Pages</strong>.
+        </p>
+
+        <p><strong>GitHub Pages: tu sitio web gratis para siempre</strong></p>
+        <ul>
+          <li>
+            <strong>Paso 1:</strong> Crea una cuenta en
+            <strong>github.com</strong> (es gratis).
+          </li>
+          <li>
+            <strong>Paso 2:</strong> Crea un "repositorio" (es como una carpeta
+            en la nube). Dale un nombre, por ejemplo:
+            <code>mi-primera-web</code>. Marca la opción "Public".
+          </li>
+          <li>
+            <strong>Paso 3:</strong> Sube tus archivos. Puedes arrastrar tu
+            carpeta con los archivos HTML, CSS, imágenes, etc.
+          </li>
+          <li>
+            <strong>Paso 4:</strong> Ve a la configuración del repositorio
+            (pestaña "Settings"). Busca la sección "Pages". En "Branch",
+            selecciona "main" y guarda.
+          </li>
+          <li>
+            <strong>Paso 5:</strong> En unos minutos, tu página estará
+            disponible en
+            <code>https://tuusuario.github.io/nombre-del-repositorio/</code>.
+          </li>
+        </ul>
+
+        <div class="nota-importante">
+          <strong>Alternativas gratis:</strong>
+          <ul style="margin-top: 8px">
+            <li>
+              <strong>Netlify</strong> — Arrastras tu carpeta y te dan un
+              enlace. Es más simple que GitHub Pages.
+            </li>
+            <li><strong>Vercel</strong> — Muy fácil también.</li>
+            <li><strong>Cloudflare Pages</strong> — Otra opción gratuita.</li>
+          </ul>
+          Todas tienen planes gratis que son más que suficientes para empezar.
+        </div>
+
+        <div class="nota">
+          <strong>¿Y si quiero un dominio .com?</strong> Puedes comprar un
+          dominio por unos pocos dólares al año (en lugares como Namecheap,
+          GoDaddy, o Cloudflare). Luego lo conectas a tu página de GitHub Pages
+          o Netlify. Pero para empezar, el dominio que te dan gratis está
+          perfecto.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 4. BUENAS PRÁCTICAS ==================== -->
+    <div class="fila">
+      <div class="tarjeta-contenido delay-2">
+        <div class="card-title">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+            "
+            alt="Buenas prácticas"
+          />
+          6. Buenas prácticas para escribir HTML
+        </div>
+        <hr />
+        <p>
+          Escribir código que funciona es el primer paso. Escribir código que
+          otros puedan leer y mantener es lo que separa a un principiante de un
+          profesional. Estas son las reglas que siguen los que saben.
+        </p>
+
+        <p><strong>1. Indentación (los espacios)</strong></p>
+        <ul>
+          <li>
+            Cada vez que abres una etiqueta dentro de otra, aumentas la
+            indentación (dos espacios o un tabulador).
+          </li>
+          <li>
+            Esto hace que el código sea legible. Si todo está pegado a la
+            izquierda, es un infierno.
+          </li>
+        </ul>
+        <div class="codigo-bloque">
+          <pre>
+&lt;!-- MAL (todo pegado) --&gt;
+&lt;body&gt;
+&lt;header&gt;
+&lt;h1&gt;Título&lt;/h1&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;p&gt;Texto&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+
+&lt;!-- BIEN (con indentación) --&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Título&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;p&gt;Texto&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/body&gt;</pre
+          >
+        </div>
+
+        <p><strong>2. Comentarios</strong></p>
+        <ul>
+          <li>
+            Puedes dejar notas en tu código que el navegador ignora. Sirven para
+            recordarte qué hace cada parte.
+          </li>
+          <li>
+            Se escriben así: <code>&lt;!-- esto es un comentario --&gt;</code>.
+          </li>
+        </ul>
+
+        <p><strong>3. Nombres claros para id y class</strong></p>
+        <ul>
+          <li>
+            Usa nombres que digan qué es, no cómo se ve.
+            <code>class="texto-rojo"</code> es mala idea porque si después
+            quieres que sea azul, el nombre queda mal. Mejor
+            <code>class="aviso-importante"</code>.
+          </li>
+          <li>
+            Usa guiones para separar palabras:
+            <code>id="seccion-contacto"</code> en lugar de
+            <code>id="seccioncontacto"</code>.
+          </li>
+        </ul>
+
+        <p><strong>4. Cerrar todas las etiquetas</strong></p>
+        <ul>
+          <li>
+            No olvides cerrar las etiquetas que abriste. Un error común es dejar
+            sin cerrar un &lt;div&gt; o &lt;section&gt;. Después todo se
+            desordena.
+          </li>
+        </ul>
+
+        <p><strong>5. Usar etiquetas semánticas</strong></p>
+        <ul>
+          <li>
+            Ya lo vimos en la Parte 1. Usa &lt;header&gt;, &lt;nav&gt;,
+            &lt;main&gt;, &lt;section&gt;, &lt;article&gt;, &lt;footer&gt;. No
+            uses &lt;div&gt; para todo.
+          </li>
+        </ul>
+
+        <div class="nota-success">
+          <strong>Validar tu código:</strong> Antes de subir tu página a
+          internet, pásala por <strong>validator.w3.org</strong>. Es una página
+          que revisa si tu HTML está bien escrito. Te dice los errores y
+          advertencias. Es gratis y es lo que usan los profesionales para
+          asegurarse de que no hay errores tontos.
+        </div>
+      </div>
+
+      <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+            style="
+              width: 28px;
+              height: 28px;
+              vertical-align: middle;
+              margin-right: 12px;
+            "
+            alt="Aprender"
+          />
+          7. Cómo seguir aprendiendo (sin pagar cursos)
+        </div>
+        <hr />
+        <p>
+          Ya sabes lo básico de HTML. Ahora viene la parte más importante:
+          <strong>aprender a aprender</strong>. Porque nadie se vuelve
+          programador solo con un manual. Es un camino de práctica constante.
+        </p>
+
+        <p><strong>Dónde buscar ayuda cuando te trabes:</strong></p>
+        <ul>
+          <li>
+            <strong>MDN Web Docs</strong> (developer.mozilla.org) — Es la
+            documentación oficial. Está en español. Si tienes una duda sobre una
+            etiqueta, busca ahí. Es más confiable que cualquier otra fuente.
+          </li>
+          <li>
+            <strong>Stack Overflow</strong> — Es un foro donde los programadores
+            preguntan y responden. Seguro alguien ya tuvo tu mismo problema.
+            Aprende a buscar bien.
+          </li>
+          <li>
+            <strong>YouTube</strong> — Hay miles de tutoriales gratis. Busca
+            canales como "Midudev", "FalconMasters", "Leonidas Esteban".
+            Aprendes viendo cómo trabajan otros.
+          </li>
+        </ul>
+
+        <p><strong>Cómo practicar:</strong></p>
+        <ul>
+          <li>
+            <strong>Clona páginas que te gusten</strong> — Elige una página
+            simple e intenta copiarla. No mires el código original, hazlo de
+            memoria. Cuando te trabes, revisa cómo lo hicieron.
+          </li>
+          <li>
+            <strong>Haz proyectos personales</strong> — No esperes a "saber
+            suficiente". Desde ahora, haz una página de tus hobbies, un
+            portafolio, una página para un familiar. Aprender haciendo es lo
+            único que funciona.
+          </li>
+          <li>
+            <strong>Mantén un repositorio en GitHub</strong> — Sube todo lo que
+            hagas. Sirve como respaldo y como portafolio para cuando busques
+            trabajo.
+          </li>
+        </ul>
+
+        <div class="nota-importante">
+          <strong>La mentalidad correcta:</strong>
+          <ul style="margin-top: 8px">
+            <li>
+              No esperes entender todo a la primera. Los programadores pasan el
+              80% del tiempo buscando en Google.
+            </li>
+            <li>
+              No te compares con los que llevan 10 años. Compárate con cómo
+              estabas ayer.
+            </li>
+            <li>
+              Hacer algo que funciona, aunque sea feo, es mejor que no hacer
+              nada. Después lo mejoras.
+            </li>
+            <li>
+              Los errores son parte del trabajo. Cada error que resuelves es un
+              aprendizaje que nadie te puede quitar.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 5. PROYECTO FINAL ==================== -->
+    <div class="tarjeta-contenido delay-4">
+      <div class="card-title">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+          style="
+            width: 28px;
+            height: 28px;
+            vertical-align: middle;
+            margin-right: 12px;
+          "
+          alt="Proyecto"
+        />
+        Proyecto final: tu primera página web profesional
+      </div>
+      <hr />
+      <p>
+        Has llegado hasta aquí. Ya sabes escribir HTML, sabes usar atributos,
+        multimedia, formularios, sabes organizar archivos, usar VS Code, y subir
+        tu página a internet gratis. Ahora toca poner todo junto.
+      </p>
+
+      <p><strong>Tu misión final:</strong></p>
+      <ul>
+        <li>
+          Crea una página web personal sobre ti. Puede ser un portafolio, una
+          página de tus intereses, lo que quieras.
+        </li>
+        <li>Organiza tus archivos en carpetas: css/, js/, img/.</li>
+        <li>Usa etiquetas semánticas (header, nav, main, section, footer).</li>
+        <li>Incluye al menos una imagen con su alt.</li>
+        <li>
+          Incluye un enlace interno (que lleve a otra sección de la misma
+          página).
+        </li>
+        <li>
+          Incluye un enlace externo (que lleve a otra página, como tu GitHub o
+          redes).
+        </li>
+        <li>
+          Usa un formulario con al menos dos tipos de input (puede ser de
+          contacto).
+        </li>
+        <li>Incluye un video o audio (puede ser incrustado de YouTube).</li>
+        <li>
+          Sube tu proyecto a GitHub Pages o Netlify para que cualquiera lo vea.
+        </li>
+      </ul>
+
+      <div class="nota-warning">
+        <strong>Bonus (si quieres destacar):</strong>
+        <ul style="margin-top: 8px">
+          <li>
+            Haz que tu página se vea bien en móvil (usa la meta viewport que
+            aprendiste en la Parte 1).
+          </li>
+          <li>Valida tu HTML en validator.w3.org y corrige los errores.</li>
+          <li>
+            Pon una meta description en el head para que Google muestre un buen
+            resumen.
+          </li>
+          <li>
+            Guarda en LocalStorage el nombre del usuario si lo escribe, y
+            salúdalo cuando vuelva.
+          </li>
+        </ul>
+      </div>
+
+      <div class="nota">
+        <strong>Resumen de herramientas gratuitas que viste:</strong>
+        <ul style="margin-top: 8px">
+          <li><strong>VS Code</strong> — Editor de código.</li>
+          <li><strong>Live Server</strong> — Ver cambios en tiempo real.</li>
+          <li>
+            <strong>GitHub Pages / Netlify</strong> — Subir tu página gratis.
+          </li>
+          <li><strong>Unsplash / Pexels</strong> — Imágenes gratis.</li>
+          <li>
+            <strong>Google Fonts</strong> — Fuentes gratis para tus textos.
+          </li>
+          <li>
+            <strong>Font Awesome</strong> — Íconos gratis para tus botones y
+            menús.
+          </li>
+          <li>
+            <strong>validator.w3.org</strong> — Revisar que tu código esté bien.
+          </li>
+          <li>
+            <strong>Chrome DevTools (F12)</strong> — Inspeccionar y probar
+            cambios en vivo.
+          </li>
+        </ul>
+      </div>
+
+      <div class="nota-success" style="text-align: center">
+        <strong>Has completado el ciclo de HTML</strong><br />
+        Desde la Parte 1 donde viste qué es una etiqueta, pasando por atributos,
+        multimedia y formularios en la Parte 2, hasta llegar aquí: herramientas,
+        organización y publicación. Ya tienes todo lo que necesitas para
+        construir páginas web por tu cuenta. Ahora el resto depende de ti:
+        practica, construye, equivócate, arregla, y sigue adelante. El camino
+        del desarrollo web es largo, pero ya diste los primeros pasos más
+        importantes. Bienvenido.
+      </div>
     </div>
 
     <!-- Botones de navegación -->
     <div class="contenedor-boton-izq">
-        <button class="btn-config" onclick="location.href='index.html'">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
-                 alt="Inicio">
-            Volver al inicio
-        </button>
-        <button class="btn-config" onclick="location.href='HTML2.html'">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
-                 alt="HTML">
-            ← Parte 2: Atributos y Multimedia
-        </button>
-        <button class="btn-config" onclick="location.href='CSS.html'">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
-                 style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px; filter: invert(0.7);" 
-                 alt="CSS">
-            Siguiente: CSS →
-        </button>
+      <button class="btn-config" onclick="location.href = 'index.html'">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+          style="
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: invert(0.7);
+          "
+          alt="Inicio"
+        />
+        Volver al inicio
+      </button>
+      <button class="btn-config" onclick="location.href = 'HTML2.html'">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+          style="
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: invert(0.7);
+          "
+          alt="HTML"
+        />
+        ← Parte 2: Atributos y Multimedia
+      </button>
+      <button class="btn-config" onclick="location.href = 'CSS.html'">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+          style="
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: invert(0.7);
+          "
+          alt="CSS"
+        />
+        Siguiente: CSS →
+      </button>
     </div>
 
     <script>
-        function toggleMenu() {
-            document.getElementById("menuDropdown").classList.toggle("show");
-        }
+      function toggleMenu() {
+        document.getElementById("menuDropdown").classList.toggle("show");
+      }
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-btn')) {
-                var dropdown = document.getElementById("menuDropdown");
-                if (dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
-                }
-            }
+      window.onclick = function (event) {
+        if (!event.target.matches(".menu-btn")) {
+          var dropdown = document.getElementById("menuDropdown");
+          if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
+          }
         }
+      };
     </script>
-
-</body>
+  </body>
 </html>
