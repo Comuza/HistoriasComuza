@@ -1,318 +1,543 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Creditos!</title>
-    
-    <style>
+    <title>Comuza · Créditos</title>
 
-/* Fondo */
+    <style>
+        /* ========== RESET Y BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background-color: rgb(56, 1, 10);
-            color: rgb(79, 87, 34);
-            font-family: sans-serif;
-            text-align: center;
-            padding: 50px;
+            background: linear-gradient(135deg,
+                    rgb(75, 15, 25),
+                    rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
         }
 
-/* Animaciones */
-        
-        @keyframes tarjetaAnimada {
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%,
+                    rgba(180, 50, 50, 0.2),
+                    transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ========== ANIMACIONES ========== */
+        @keyframes cinematicSlow {
             0% {
                 opacity: 0;
-                transform: translateY(80px) scale(0.8);
+                transform: translateX(20px) scale(0.92);
             }
-            50% {
-                opacity: 1;
-                transform: translateY(-15px) scale(1.02);
-            }
+
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateX(0) scale(1);
             }
         }
-        
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+        }
+
         @keyframes botonPulso {
             0% {
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(89, 3, 228, 0.256);
+                box-shadow: 0 0 0 0 rgba(200, 150, 80, 0.3);
             }
+
             50% {
-                transform: scale(.99);
-                box-shadow: 0 0 0 12px rgba(15, 170, 33, 0);
+                transform: scale(0.98);
+                box-shadow: 0 0 0 12px rgba(200, 150, 80, 0);
             }
+
             100% {
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(15, 170, 33, 0);
-            }
-        }
-    
-
-        @keyframes texto {
-            0% {
-                opacity: 0;
-                transform: translateY(10px) scale(0.95);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
-            }
-            25% {
-                opacity: 0.5;
-                transform: translateY(-3px) scale(1.02);
-                text-shadow: 0 0 2px rgba(79, 87, 34, 0.5);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translateY(0) scale(1.01);
-                text-shadow: 0 0 5px rgba(79, 87, 34, 0.8);
-            }
-            75% {
-                opacity: 1;
-                transform: translateY(-2px) scale(1);
-                text-shadow: 0 0 3px rgba(79, 87, 34, 0.6);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
+                box-shadow: 0 0 0 0 rgba(200, 150, 80, 0);
             }
         }
 
-                @keyframes texto2 {
-            0% {
-                opacity: 0;
-                transform: translateY(-7px) scale(0.9);
-                text-shadow: 0 0 0px rgba(79, 87, 34, 0);
-            }
-            25% {
-                opacity: 0.5;
-                transform: translateY(3px) scale(1.02);
-                text-shadow: 0 0 2px rgba(79, 87, 34, 0.5);
-            }
-
-            75% {
-                opacity: .9;
-                transform: translateY(1px) scale(1);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-                @keyframes rebote {
+        @keyframes rebote {
             0% {
                 transform: scale(0);
                 opacity: 0;
                 filter: blur(10px);
             }
+
             20% {
-                transform: scale(0.6); 
+                transform: scale(0.6);
                 opacity: 0.5;
                 filter: blur(5px);
             }
+
             40% {
-                transform: scale(1.1) rotate(0deg);
+                transform: scale(1.1);
                 opacity: 0.9;
                 filter: blur(0px);
             }
+
             55% {
-                transform: scale(0.97) rotate(0deg);
+                transform: scale(0.97);
                 opacity: 1;
             }
+
             70% {
-                transform: scale(1.03) rotate(0deg);
+                transform: scale(1.03);
                 opacity: 1;
             }
+
             85% {
-                transform: scale(0.99) rotate(0deg);
+                transform: scale(0.99);
                 opacity: 1;
             }
+
             100% {
-                transform: scale(1) rotate(0deg);
+                transform: scale(1);
                 opacity: 1;
                 filter: blur(0px);
             }
         }
 
-/* Clases */
-
-        .texto {
-            display: inline-block;
-            font-weight: normal;
-            animation: texto 1.2s ease-out 0.2s forwards;
-            transform-origin: center;
-        }
-
-        .texto2 {
-            display: inline-block;
-            font-weight: normal;
-            animation: texto2 1s ease-out 0.2s forwards;
-            transform-origin: center;
-        }
-        
-        .card, .carf, .cars {
-            background-color: rgb(25, 23, 55);
-            border: 1px solid rgb(79, 87, 34);
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            animation: tarjetaAnimada 0.7s ease-out forwards;
+        /* ========== TARJETAS ========== */
+        .tarjeta-contenido {
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 16px;
+            padding: 26px 22px;
+            margin-bottom: 28px;
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
             opacity: 0;
+            animation-fill-mode: forwards;
         }
 
-        .card { 
-            border-radius: 24px; 
-            padding: 20px; 
-            max-width: 400px;
-            animation-delay: 0.1s;
-        }
-        
-        .carf { 
-            border-radius: 16px; 
-            min-height: 129px; 
-            max-width: 800px; 
-            margin: 60px auto;
-            animation-delay: 0.3s;
+        .tarjeta-contenido:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-4px);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
         }
 
-        .cars { 
-            border-radius: 50px; 
-            max-width: 800px; 
-            margin: 60px auto; 
-            padding-bottom: 20px;
-            animation-delay: 0.5s;
+        /* ========== DELAYS ========== */
+        .delay-1 {
+            animation-delay: 0.05s;
         }
-        
-        .apa {
-            background-color: rgb(27, 22, 22);
-            color: rgb(37, 45, 38);
-            padding: 10px 15px;
-            margin: 10px;
+
+        .delay-2 {
+            animation-delay: 0.15s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.35s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.55s;
+        }
+
+        /* ========== ELEMENTOS ========== */
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        .card-title-small {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 14px;
+            color: #e6c38a;
+        }
+
+        /* ========== BOTÓN MENÚ ========== */
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
             cursor: pointer;
-            border-radius: 5px;
+            backdrop-filter: blur(8px);
             transition: all 0.3s ease;
-            animation: botonPulso 2s infinite;
-        }
-        
-        .apa:hover {
-            background-color: rgba(15, 170, 33, 0.19);
-            transform: scale(1);
-            animation: botonPulso 3s infinite;
+            animation: botonPulso 2.5s infinite;
         }
 
-        .caida {
+        .menu-btn:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            transform: scale(0.97);
+        }
+
+        /* ========== DROPDOWN ========== */
+        .dropdown {
             display: none;
             position: fixed;
-            right: 0;
-            top: 50px;
-            background-color: rgb(0, 0, 0);
-            min-width: 160px;
-            border: 1px solid rgb(255, 255, 255);
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
             z-index: 100;
-            margin: 10px;
-            text-align: left;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             opacity: 0;
             transform: translateX(100px) rotate(-5deg);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .caida.show {
+        .dropdown.show {
             display: block;
             opacity: 1;
             transform: translateX(0) rotate(0deg);
             animation: rebote 0.5s ease-out forwards;
         }
 
-        .caida a {
-            color: white;
-            padding: 12px 16px;
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
             text-decoration: none;
             display: block;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
             transition: all 0.3s ease;
         }
 
-        .caida a:hover {
-            background-color: rgb(17, 2, 2);
-            padding-left: 24px;
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
         }
 
-        .boton {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 101;
-            width: fit-content;
-            transition: all 1.3s ease;
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        /* ========== CRÉDITOS ========== */
+        .creditos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .credito-columna {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px 16px;
+            border-left: 3px solid #c89a4c;
+            text-align: center;
+        }
+
+        .credito-columna h3 {
+            color: #e6c38a;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .credito-columna .rol {
+            font-size: 12px;
+            color: rgba(200, 180, 150, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        .credito-columna .nombre {
+            font-size: 16px;
+            color: rgba(245, 225, 200, 0.9);
+            font-weight: 500;
+            padding: 4px 0;
+        }
+
+        .credito-columna .nombre span {
+            color: #c89a4c;
+        }
+
+        .credito-columna .color-html {
+            color: #e34f26;
+        }
+
+        .credito-columna .color-css {
+            color: #1572b6;
+        }
+
+        .credito-columna .color-js {
+            color: #f7df1e;
+        }
+
+        .separador-tecnologia {
+            border: 0.5px solid rgba(200, 150, 80, 0.2);
+            margin: 24px 0;
+        }
+
+        .badge-tecnologia {
+            display: inline-block;
+            background: rgba(200, 150, 80, 0.1);
+            border: 1px solid rgba(200, 150, 80, 0.3);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #d4b88a;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+        }
+
+        /* ========== BOTONES ========== */
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            transform: scale(0.98);
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .creditos-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            body {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .menu-btn {
+                padding: 8px 16px;
+                font-size: 11px;
+            }
         }
     </style>
-
 </head>
+
 <body>
 
-<!-- Botón de menú -->
+    <!-- ===== MENÚ FLOTANTE ===== -->
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="Manul.html">Manual</a>
+            <a href="Equipo.html">Equipo</a>
+            <a href="index.html">Inicio</a>
+        </div>
+    </div>
 
-<div class="boton">
-    <button onclick="menu()" class="apa"><span style="color: rgba(15, 170, 33, 0.847);">Menu</span></button>
-    <div id="menu" class="caida">
-        <a href="Manul.html" class="texto2"><span style="color: rgba(246, 30, 6, 0.71);">Manual</span></a>
-        <a href="Equipo.html" class="texto2"><span style="color: rgb(32, 2, 140);">Equipo</span></a>
-        <a href="index.html" class="texto2"><span style="color: rgb(44, 86, 86);">Inicio</span></a></div>
-        
-    </div> 
-</div>
+    <!-- ===== ENCABEZADO ===== -->
+    <div class="tarjeta-contenido delay-1">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+            <h1 style="font-size: 2rem; font-weight: 600; letter-spacing: -0.5px;">
+                ✦ Créditos
+            </h1>
+        </div>
+        <hr />
+        <p style="font-size: 15px; color: rgba(220, 215, 195, 0.8);">
+            Detrás de cada línea de código hay una historia. Estos son los creadores de esta página.
+        </p>
+    </div>
 
-<!-- Texto -->
+    <!-- ===== HTML ===== -->
+    <div class="tarjeta-contenido delay-2">
+        <div class="card-title">
+            <span style="color: #e34f26;">⟨</span> HTML
+            <span style="color: #e34f26;">⟩</span>
+        </div>
+        <hr />
 
-<div class="card">
-    <h1 class="texto"><b>Bienvenido a mi rincón</b></h1>
-</div>
+        <div class="creditos-grid">
+            <div class="credito-columna">
+                <h3>Dirección</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Arquitectura y estructura</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Programador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Desarrollo y maquetación</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Diseñador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">UI/UX y experiencia visual</div>
+            </div>
+        </div>
 
-<div class="carf">
-    <h1 class="texto"><b>Creditos</b></h1>
-    <br>
-    <p class="texto">Estos son los creadores de la pagina...</p>
-</div>
+        <div style="text-align: center; margin-top: 8px;">
+            <span class="badge-tecnologia">✦ Tester: Comuza</span>
+        </div>
+    </div>
 
-<div class="cars">
-    <h1 class="texto"><b>Html</b></h1>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 20px 0;">
-    <h2 class="texto"><span style="color: rgb(66, 148, 250);">Dirección: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Programador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 120, 159);">Diseñador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Tester: Comuza</span></h2>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 30px 0;">
-    <h1 class="texto"><b>CSS</b></h1>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 20px 0;">
-    <h2 class="texto"><span style="color: rgb(66, 148, 250);">Dirección: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Programador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 120, 159);">Diseñador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Tester: Comuza</span></h2>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 30px 0;">
-    <h1 class="texto"><b>JavaScript</b></h1>
-    <hr style="border-color: rgb(79, 87, 34); border-width: 2px; margin: 20px 0;">
-    <h2 class="texto"><span style="color: rgb(66, 148, 250);">Dirección: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Programador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 120, 159);">Diseñador: Comuza</span></h2>
-    <hr>
-    <h2 class="texto"><span style="color: rgb(123, 86, 34);">Tester: Comuza</span></h2>
-</div>
+    <!-- ===== CSS ===== -->
+    <div class="tarjeta-contenido delay-3">
+        <div class="card-title">
+            <span style="color: #1572b6;">{</span> CSS
+            <span style="color: #1572b6;">}</span>
+        </div>
+        <hr />
 
-<script>
+        <div class="creditos-grid">
+            <div class="credito-columna">
+                <h3>Dirección</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Estilos y paleta de color</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Programador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Animaciones y efectos</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Diseñador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Identidad visual</div>
+            </div>
+        </div>
 
-// Función para mostrar/ocultar el menú desplegable
+        <div style="text-align: center; margin-top: 8px;">
+            <span class="badge-tecnologia">✦ Tester: Comuza</span>
+        </div>
+    </div>
 
-    function menu() {
-        document.getElementById("menu").classList.toggle("show");
-    }
+    <!-- ===== JAVASCRIPT ===== -->
+    <div class="tarjeta-contenido delay-4">
+        <div class="card-title">
+            <span style="color: #f7df1e;">⚡</span> JavaScript
+        </div>
+        <hr />
 
-</script>
+        <div class="creditos-grid">
+            <div class="credito-columna">
+                <h3>Dirección</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Lógica y funcionalidad</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Programador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Interactividad y eventos</div>
+            </div>
+            <div class="credito-columna">
+                <h3>Diseñador</h3>
+                <div class="nombre"><span>Comuza</span></div>
+                <div class="rol">Experiencia de usuario</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 8px;">
+            <span class="badge-tecnologia">✦ Tester: Comuza</span>
+        </div>
+    </div>
+
+    <!-- ===== PIE ===== -->
+    <div class="tarjeta-contenido delay-4" style="text-align: center;">
+        <p style="color: rgba(200, 180, 150, 0.4); font-size: 13px;">
+            ✦ El código limpio no es una opción, es una disciplina ✦
+        </p>
+        <hr style="max-width: 200px; margin: 12px auto;" />
+        <p style="color: rgba(200, 180, 150, 0.3); font-size: 11px;">
+            Comuza · 2026
+        </p>
+    </div>
+
+    <!-- ===== BOTONES ===== -->
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href = 'index.html'">
+            ✦ Volver al inicio
+        </button>
+        <button class="btn-config" onclick="location.href = 'Equipo.html'">
+            Ver equipo →
+        </button>
+    </div>
+
+    <!-- ===== SCRIPT ===== -->
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches(".menu-btn")) {
+                var dropdown = document.getElementById("menuDropdown");
+                if (dropdown.classList.contains("show")) {
+                    dropdown.classList.remove("show");
+                }
+            }
+        };
+    </script>
 
 </body>
+
 </html>
