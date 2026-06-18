@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comuza · Currículum</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg,
+                    rgb(75, 15, 25),
+                    rgba(90, 100, 15, 0.7));
+            min-height: 100vh;
+            padding: 24px;
+            font-family:
+                system-ui,
+                -apple-system,
+                "Segoe UI",
+                Roboto,
+                "Helvetica Neue",
+                sans-serif;
+            color: rgba(255, 245, 220, 0.9);
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%,
+                    rgba(180, 50, 50, 0.2),
+                    transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes cinematicSlow {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.92);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+
+            50% {
+                text-shadow: 0 0 10px rgba(200, 150, 50, 0.5);
+                border-left-color: rgba(220, 170, 60, 0.8);
+            }
+
+            100% {
+                text-shadow: 0 0 0px rgba(200, 150, 50, 0);
+                border-left-color: rgba(200, 150, 50, 0.3);
+            }
+        }
+
+        .tarjeta-contenido {
+            background: rgba(40, 25, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 16px;
+            padding: 26px 22px;
+            margin-bottom: 28px;
+            transition: all 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
+            animation: cinematicSlow 1.5s cubic-bezier(0.2, 0.85, 0.4, 1.05) forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .tarjeta-contenido:hover {
+            border-color: rgba(220, 170, 100, 0.8);
+            transform: translateY(-4px);
+            background: rgba(60, 38, 45, 0.7);
+            box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+        }
+
+        .fila {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .fila>.tarjeta-contenido {
+            flex: 1;
+            min-width: 280px;
+            margin-bottom: 0;
+        }
+
+        .fila-3 {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .fila-3>.tarjeta-contenido {
+            flex: 1;
+            min-width: 220px;
+            margin-bottom: 0;
+        }
+
+        .delay-1 {
+            animation-delay: 0.05s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.15s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.35s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.55s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.75s;
+        }
+
+        hr {
+            border: 0.5px solid rgba(200, 150, 80, 0.35);
+            margin: 16px 0;
+        }
+
+        .btn-config {
+            background: rgba(35, 22, 27, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.55);
+            border-radius: 8px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-config:hover {
+            background: rgba(90, 55, 65, 0.8);
+            border-color: rgba(230, 180, 110, 0.95);
+            transform: scale(0.98);
+        }
+
+        .contenedor-boton-izq {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 18px;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        .card-title-small {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            border-left: 3px solid #c89a4c;
+            padding-left: 14px;
+            color: #e6c38a;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 8px;
+        }
+
+        li {
+            margin: 12px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: rgba(200, 150, 80, 0.8);
+            font-size: 12px;
+        }
+
+        .codigo-bloque {
+            background: rgba(20, 15, 18, 0.7);
+            border: 1px solid rgba(200, 150, 80, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 15px 0;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            color: rgba(200, 220, 150, 0.9);
+        }
+
+        .codigo-bloque pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .nota {
+            background: rgba(200, 150, 80, 0.15);
+            border-left: 3px solid #c89a4c;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .nota-warning {
+            background: rgba(200, 100, 50, 0.2);
+            border-left-color: #c97e3a;
+        }
+
+        .nota-success {
+            background: rgba(100, 180, 80, 0.15);
+            border-left-color: #7cb83c;
+        }
+
+        .nota-importante {
+            background: rgba(200, 150, 80, 0.25);
+            border-left-color: #e6c38a;
+        }
+
+        .menu-boton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+        }
+
+        .menu-btn {
+            background: rgba(35, 22, 27, 0.8);
+            border: 1px solid rgba(200, 150, 80, 0.6);
+            border-radius: 30px;
+            padding: 10px 24px;
+            color: rgba(245, 225, 180, 0.9);
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+        }
+
+        .dropdown {
+            display: none;
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            background: rgba(20, 15, 18, 0.95);
+            backdrop-filter: blur(16px);
+            min-width: 180px;
+            border: 1px solid rgba(200, 150, 80, 0.5);
+            border-radius: 12px;
+            z-index: 100;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown a {
+            color: rgba(245, 225, 200, 0.9);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+        }
+
+        .dropdown a:hover {
+            background: rgba(200, 150, 80, 0.2);
+            padding-left: 28px;
+        }
+
+        .lista-herramientas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .herramienta-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 3px solid #c89a4c;
+        }
+
+        .herramienta-item h3 {
+            color: #e6c38a;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .herramienta-item p {
+            font-size: 13px;
+            color: rgba(200, 200, 180, 0.85);
+            line-height: 1.5;
+        }
+
+        .cv-perfil-texto {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(220, 215, 195, 0.9);
+        }
+
+        .cv-contacto-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.15);
+        }
+
+        .cv-contacto-item:last-child {
+            border-bottom: none;
+        }
+
+        .cv-contacto-item a {
+            color: #c89a4c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .cv-contacto-item a:hover {
+            color: #e6c38a;
+        }
+
+        .cv-contacto-item .label {
+            color: rgba(200, 180, 150, 0.6);
+            font-size: 12px;
+            min-width: 70px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(200, 150, 80, 0.15);
+            border: 1px solid rgba(200, 150, 80, 0.3);
+            color: #d4b88a;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 3px 4px 3px 0;
+        }
+
+        .tag-azul {
+            border-color: rgba(100, 150, 200, 0.4);
+            color: #8ab8d4;
+            background: rgba(100, 150, 200, 0.1);
+        }
+
+        .tag-verde {
+            border-color: rgba(120, 200, 80, 0.3);
+            color: #a8d48a;
+            background: rgba(120, 200, 80, 0.08);
+        }
+
+        .proyecto-item {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(200, 150, 80, 0.1);
+        }
+
+        .proyecto-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .proyecto-item .nombre {
+            font-size: 16px;
+            font-weight: 500;
+            color: #e6c38a;
+        }
+
+        .proyecto-item .estado {
+            font-size: 11px;
+            color: rgba(200, 180, 150, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        .proyecto-item .descripcion {
+            font-size: 14px;
+            color: rgba(200, 200, 180, 0.8);
+            margin-top: 4px;
+        }
+
+        .proyecto-item .link {
+            font-size: 12px;
+            color: #c89a4c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .proyecto-item .link:hover {
+            color: #e6c38a;
+            text-decoration: underline;
+        }
+
+        .estado-completado {
+            color: #7cb83c;
+        }
+
+        .estado-progreso {
+            color: #c89a4c;
+        }
+
+        .estado-planificacion {
+            color: rgba(200, 180, 150, 0.4);
+        }
+
+        .filosofia-cita {
+            font-style: italic;
+            font-size: 18px;
+            color: #e6d4b8;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(200, 150, 80, 0.2);
+            border-bottom: 1px solid rgba(200, 150, 80, 0.2);
+            margin: 10px 0;
+        }
+
+        .filosofia-cita span {
+            color: #c89a4c;
+        }
+
+        .badge-disponible {
+            display: inline-block;
+            background: rgba(100, 180, 80, 0.15);
+            border: 1px solid rgba(100, 180, 80, 0.3);
+            color: #7cb83c;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 768px) {
+            .fila {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .fila-3 {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            body {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .filosofia-cita {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menú flotante -->
+    <div class="menu-boton">
+        <button onclick="toggleMenu()" class="menu-btn">✦ Menú ✦</button>
+        <div id="menuDropdown" class="dropdown">
+            <a href="index.html">Inicio</a>
+            <a href="curriculum.html">Currículum</a>
+            <a href="proyectos.html">Proyectos</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </div>
+
+    <!-- ==================== ENCABEZADO ==================== -->
+    <div class="tarjeta-contenido delay-1">
+        <div style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 15px;
+          flex-wrap: wrap;
+        ">
+            <div>
+                <h1 style="font-size: 2.2rem; font-weight: 600; letter-spacing: -0.5px;">
+                    Comuza
+                </h1>
+                <p style="font-size: 1.1rem; color: rgba(200, 180, 150, 0.7);">
+                    Arquitectura de Sistemas & Desarrollo Web
+                </p>
+            </div>
+            <div>
+                <span class="badge-disponible">✦ Disponible para colaboraciones</span>
+            </div>
+        </div>
+        <hr />
+        <p style="font-size: 15px; line-height: 1.7; color: rgba(220, 215, 195, 0.85);">
+            Desarrollador web con enfoque en arquitectura de código, eficiencia de
+            recursos y seguridad. Especializado en tecnologías nativas y experiencias
+            digitales con identidad visual definida.
+        </p>
+    </div>
+
+    <!-- ==================== FILA: PERFIL + CONTACTO ==================== -->
+    <div class="fila">
+        <!-- Perfil -->
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title" style="font-size: 1.4rem;">Perfil</div>
+            <hr />
+            <div class="cv-perfil-texto">
+                <p>
+                    Desarrollador web orientado a la construcción de experiencias
+                    digitales con un fuerte énfasis en la <strong>arquitectura de código</strong>,
+                    la eficiencia de recursos y la integridad de datos.
+                </p>
+                <br />
+                <p>
+                    Mi enfoque se centra en la utilización de tecnologías nativas
+                    (<strong>Vanilla JS, CSS3, HTML5</strong>) y un buen uso de
+                    frameworks, para garantizar un control total sobre el rendimiento y
+                    la seguridad de los sistemas, evitando la dependencia innecesaria de
+                    marcos de trabajo externos.
+                </p>
+                <br />
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag tag-azul">UI/UX</span>
+                    <span class="tag tag-verde">JavaScript</span>
+                    <span class="tag">Vanilla JS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title" style="font-size: 1.4rem;">Contacto</div>
+            <hr />
+            <div class="cv-contacto-item">
+                <span class="label">Email</span>
+                <a href="mailto:Comuzadeveloper@outlook.com">Comuzadeveloper@outlook.com</a>
+            </div>
+            <div class="cv-contacto-item">
+                <span class="label">LinkedIn</span>
+                <a href="https://www.linkedin.com/in/comuza-developer-b93bb73b8/" target="_blank">
+                    Comuza Developer
+                </a>
+            </div>
+            <div class="cv-contacto-item">
+                <span class="label">GitHub</span>
+                <a href="https://github.com/Comuza" target="_blank">Comuza</a>
+                <span style="color: rgba(200, 180, 150, 0.3);">·</span>
+                <a href="https://github.com/ComuzaMobile" target="_blank">ComuzaMobile</a>
+            </div>
+            <div class="cv-contacto-item">
+                <span class="label">Slack</span>
+                <span style="color: rgba(200, 200, 180, 0.7); font-size: 14px;">
+                    Disponible para consultas
+                </span>
+            </div>
+            <div class="nota" style="margin-top: 16px; font-size: 12px; text-align: center;">
+                ✦ Abierto a oportunidades profesionales y colaboraciones
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FILA: COMPETENCIAS + FILOSOFÍA ==================== -->
+    <div class="fila">
+        <!-- Competencias -->
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title" style="font-size: 1.4rem;">Competencias Técnicas</div>
+            <hr />
+
+            <div style="margin-bottom: 16px;">
+                <p style="font-weight: 500; color: #e6c38a; font-size: 14px; margin-bottom: 6px;">
+                    Dominio
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag tag-azul">UI/UX</span>
+                    <span class="tag">Diseño de Interfaces</span>
+                </div>
+            </div>
+
+            <div>
+                <p style="font-weight: 500; color: #e6c38a; font-size: 14px; margin-bottom: 6px;">
+                    Aprendizaje Activo
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag tag-verde">JavaScript (Avanzado)</span>
+                    <span class="tag">Bash</span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div>
+                <p style="font-weight: 500; color: #e6c38a; font-size: 14px; margin-bottom: 6px;">
+                    Entorno de Trabajo
+                </p>
+                <ul>
+                    <li>Antigravity IDE</li>
+                    <li>Colaboración en entornos Open Source</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Filosofía -->
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title" style="font-size: 1.4rem;">Filosofía</div>
+            <hr />
+
+            <div class="filosofia-cita">
+                "El código limpio no es una opción, es una disciplina.<br />
+                La optimización… <span>ni se debería negociar.</span>"
+            </div>
+
+            <div style="margin-top: 16px;">
+                <p style="color: rgba(200, 200, 180, 0.7); font-size: 14px; text-align: center;">
+                    :3
+                </p>
+            </div>
+
+            <div class="nota-importante" style="margin-top: 16px; text-align: center; font-size: 12px;">
+                ✦ La tecnología avanza, pero los principios permanecen.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PROYECTOS ==================== -->
+    <div class="tarjeta-contenido delay-4">
+        <div class="card-title">Proyectos en Desarrollo</div>
+        <hr />
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px;">
+
+            <div class="proyecto-item">
+                <div>
+                    <span class="nombre">CZAdb</span>
+                    <span class="estado estado-planificacion">● Planificación</span>
+                </div>
+                <div class="descripcion">
+                    Sistema de optimización de hardware mediante ADB para dispositivos
+                    móviles.
+                </div>
+                <a href="https://github.com/Comuza/CZAdb" target="_blank" class="link">
+                    Ver repositorio →
+                </a>
+            </div>
+
+            <div class="proyecto-item">
+                <div>
+                    <span class="nombre">Kecomu</span>
+                    <span class="estado estado-completado">● Finalizado</span>
+                </div>
+                <div class="descripcion">
+                    Plataforma integral de servicios digitales.
+                </div>
+                <a href="https://comuza.github.io/Comuza-IAKerolmi/Html/" target="_blank" class="link">
+                    Visitar sitio →
+                </a>
+            </div>
+
+            <div class="proyecto-item">
+                <div>
+                    <span class="nombre">Kerolmi</span>
+                    <span class="estado estado-progreso">● En progreso</span>
+                </div>
+                <div class="descripcion">
+                    Desarrollo de sitio web para proyecto independiente de entrenamiento.
+                </div>
+                <a href="https://comuza.github.io/HistoriasComuza/Paginas" target="_blank" class="link">
+                    Visitar sitio →
+                </a>
+            </div>
+
+            <div class="proyecto-item">
+                <div>
+                    <span class="nombre">FNAFHS</span>
+                    <span class="estado estado-completado">● Finalizado</span>
+                </div>
+                <div class="descripcion">
+                    Desarrollo de sitio web para producto de animación indie.
+                </div>
+                <a href="https://comuza.github.io/FNAFHS-REMAKE-WEB-SITIO/" target="_blank" class="link">
+                    Visitar sitio →
+                </a>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <span style="color: rgba(200, 180, 150, 0.4); font-size: 12px;">Estado:</span>
+                <span style="font-size: 12px;">
+                    <span class="estado-completado">●</span> Finalizado
+                </span>
+                <span style="font-size: 12px;">
+                    <span class="estado-progreso">●</span> En progreso
+                </span>
+                <span style="font-size: 12px;">
+                    <span class="estado-planificacion">●</span> Planificación
+                </span>
+            </div>
+            <div>
+                <span style="color: rgba(200, 180, 150, 0.3); font-size: 11px;">
+                    Total: 4 proyectos
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TRAYECTORIA ==================== -->
+    <div class="fila">
+        <div class="tarjeta-contenido delay-2">
+            <div class="card-title" style="font-size: 1.4rem;">Trayectoria Profesional</div>
+            <hr />
+            <ul>
+                <li>
+                    <strong>Colaboración activa</strong> en comunidades de desarrollo
+                    independiente.
+                </li>
+                <li>
+                    <strong>Participación</strong> en iniciativas de código abierto con
+                    impacto social.
+                </li>
+            </ul>
+        </div>
+
+        <div class="tarjeta-contenido delay-3">
+            <div class="card-title" style="font-size: 1.4rem;">Herramientas</div>
+            <hr />
+            <div class="lista-herramientas" style="grid-template-columns: 1fr 1fr;">
+                <div class="herramienta-item">
+                    <h3>Antigravity IDE</h3>
+                    <p>Editor de código principal</p>
+                </div>
+                <div class="herramienta-item">
+                    <h3>GitHub</h3>
+                    <p>Control de versiones</p>
+                </div>
+                <div class="herramienta-item">
+                    <h3>Live Server</h3>
+                    <p>Vista previa en tiempo real</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== BOTONES ==================== -->
+    <div class="contenedor-boton-izq">
+        <button class="btn-config" onclick="location.href = 'index.html'">
+            ✦ Volver al inicio
+        </button>
+        <button class="btn-config" onclick="location.href = 'proyectos.html'">
+            Ver todos los proyectos →
+        </button>
+        <a href="mailto:Comuzadeveloper@outlook.com" class="btn-config"
+            style="background: rgba(200, 150, 80, 0.2); border-color: rgba(200, 150, 80, 0.6);">
+            ✦ Contactar
+        </a>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("menuDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches(".menu-btn")) {
+                var dropdown = document.getElementById("menuDropdown");
+                if (dropdown.classList.contains("show")) {
+                    dropdown.classList.remove("show");
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>
